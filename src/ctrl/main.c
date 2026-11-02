@@ -34,8 +34,10 @@ int main(void) {
     int c = getchar_timeout_us(100000);
     if (c == PICO_ERROR_TIMEOUT) continue;
     if (c == 'g') {
-      press(PIN_REQ); sleep_ms(4000); release(PIN_REQ);
-      printf("bootsel logiciel ok\r\n");
+      press(PIN_REQ); sleep_ms(50);
+      int lvl = gpio_get(PIN_REQ);   // niveau reel de la ligne pendant l'appui (doit etre 0)
+      sleep_ms(3950); release(PIN_REQ);
+      printf("bootsel logiciel ok, ligne pendant l'appui=%d\r\n", lvl);
     } else if (c == 'r') {
       press(PIN_RUN); sleep_ms(100); release(PIN_RUN);
       printf("reset ok\r\n");

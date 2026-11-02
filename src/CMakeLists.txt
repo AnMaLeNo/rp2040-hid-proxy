@@ -6,7 +6,7 @@ pico_sdk_init()
 set(PICO_PIO_USB_DIR "${CMAKE_CURRENT_LIST_DIR}/../Pico-PIO-USB")
 add_subdirectory(${PICO_PIO_USB_DIR} pico_pio_usb)
 
-foreach(variant proxy_souris proxy_souris_dmdp proxy_souris_debug proxy_souris_dmdp_debug proxy_souris_dev proxy_souris_dev_late proxy_souris_dev_plainfirst)
+foreach(variant proxy_souris proxy_souris_dmdp proxy_souris_debug proxy_souris_dmdp_debug proxy_souris_dev proxy_souris_dev_late proxy_souris_dev_plainfirst proxy_souris_dev_hostlog)
   add_executable(${variant} main.c
     ${PICO_TINYUSB_PATH}/src/portable/raspberrypi/pio_usb/dcd_pio_usb.c
     ${PICO_TINYUSB_PATH}/src/portable/raspberrypi/pio_usb/hcd_pio_usb.c)
@@ -26,3 +26,4 @@ target_compile_definitions(proxy_souris_dmdp_debug PRIVATE SWAP_DPDM DEBUG_CDC)
 target_compile_definitions(proxy_souris_dev PRIVATE DEV_CDC)
 target_compile_definitions(proxy_souris_dev_late PRIVATE DEV_CDC DEV_LATE)
 target_compile_definitions(proxy_souris_dev_plainfirst PRIVATE DEV_CDC DEV_LATE DEV_PLAIN_FIRST)
+target_compile_definitions(proxy_souris_dev_hostlog PRIVATE DEV_CDC DEV_HOST_LOG)

@@ -26,7 +26,13 @@
 #define CFG_TUH_LOG_LEVEL           2
 #endif
 #ifdef DEV_CDC
+#ifdef DEV_HOST_LOG
+#define CFG_TUSB_DEBUG              2   // diagnostic : requetes de la pile hote detaillees (lourd)
+#define CFG_TUD_LOG_LEVEL           1
+#define CFG_TUH_LOG_LEVEL           2
+#else
 #define CFG_TUSB_DEBUG              1   // erreurs seulement : le journal ne doit pas freiner le relais
+#endif
 #endif
 
 // Cote souris : hote PIO-USB (rhport 1), D+ sur GP0, D- sur GP1

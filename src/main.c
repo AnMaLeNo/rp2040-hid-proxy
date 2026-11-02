@@ -139,7 +139,10 @@ static void ws2812_put(uint32_t rgb) {
 // de demarrage si le firmware se fige.
 #define PIN_BOOTSEL_REQ   3
 static inline void check_bootsel_req(void) {
-  if (!gpio_get(PIN_BOOTSEL_REQ)) reset_usb_boot(0, 0);
+  if (!gpio_get(PIN_BOOTSEL_REQ)) {
+    DBG("GP3 a 0 : retour en BOOTSEL\r\n");
+    reset_usb_boot(0, 0);
+  }
 }
 
 #define MAX_HID_ITF       CFG_TUD_HID
@@ -465,8 +468,25 @@ static void core1_main(void) {
 #endif
   tuh_configure(1, TUH_CFGID_RPI_PIO_USB_CONFIGURATION, &pio_cfg);
   tuh_init(1);
+  // Reprise : si une interface HID est vue mais que la copie des descripteurs ne
+  // se termine pas en 3 s (echec d'une requete pendant l'enumeration, observe
+  // avec la G502 : process_set_config ASSERT FAILED), la carte redemarre. Rien
+  // n'est encore expose au PC a ce stade, le redemarrage est invisible pour lui.
+  uint32_t stall_since = 0;
   while (true) {
     tuh_task();
+    uint32_t now = to_ms_since_boot(get_absolute_time());
+    if (g.n_itf > 0 && !g.ready) {
+      if (stall_since == 0) stall_since = now;
+      else if (now - stall_since > 3000) {
+        DBG("enumeration souris bloquee (n_itf=%u) : redemarrage\r\n", g.n_itf);
+        sleep_ms(300);   // laisse le coeur 0 vider le journal
+        watchdog_reboot(0, 0, 0);
+        while (true) tight_loop_contents();
+      }
+    } else {
+      stall_since = 0;
+    }
     if (pending_mount) {
       uint8_t d = pending_mount;
       pending_mount = 0;
@@ -737,8 +757,8 @@ int main(void) {
     uint32_t now = to_ms_since_boot(get_absolute_time());
     if (now >= next_beat) {
       next_beat = now + 1000;
-      DBG("t=%lu ms led=%06lx ready=%u n_itf=%u exposed=%u connected=%u mounted=%u cfg=%u\r\n", (unsigned long) now,
-          (unsigned long) led_color, g.ready, g.n_itf, exposed, tud_connected(), tud_mounted(), dev_cfg_len);
+      DBG("t=%lu ms led=%06lx ready=%u n_itf=%u exposed=%u connected=%u mounted=%u cfg=%u GP3=%u\r\n", (unsigned long) now,
+          (unsigned long) led_color, g.ready, g.n_itf, exposed, tud_connected(), tud_mounted(), dev_cfg_len, gpio_get(PIN_BOOTSEL_REQ));
     }
 #endif
     // LED : etat du coeur 1 (blanc faible, bleu, jaune, vert, rouge) tant que le PC
