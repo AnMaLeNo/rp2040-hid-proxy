@@ -133,6 +133,14 @@ static void ws2812_put(uint32_t rgb) {
 
 // Bouton de test : GP2 relie a GND = clic injecte sur la souris
 #define PIN_INJECT        2
+// Ligne de reflash : GP3 tire a GND (par la carte de controle) = retour en BOOTSEL.
+// Verifiee tout au debut de main() et a chaque tour de boucle, dans toutes les
+// variantes, donc aussi la transparente. Le chien de garde (3 s) ramene au test
+// de demarrage si le firmware se fige.
+#define PIN_BOOTSEL_REQ   3
+static inline void check_bootsel_req(void) {
+  if (!gpio_get(PIN_BOOTSEL_REQ)) reset_usb_boot(0, 0);
+}
 
 #define MAX_HID_ITF       CFG_TUD_HID
 #define MAX_STRINGS       8
@@ -627,6 +635,11 @@ static void poll_inject_button(void) {
 }
 
 int main(void) {
+  gpio_init(PIN_BOOTSEL_REQ);
+  gpio_set_dir(PIN_BOOTSEL_REQ, GPIO_IN);
+  gpio_pull_up(PIN_BOOTSEL_REQ);
+  sleep_ms(2);
+  check_bootsel_req();
   set_sys_clock_khz(120000, true);
   sleep_ms(10);
   gpio_init(PIN_INJECT);
@@ -650,6 +663,7 @@ int main(void) {
   uint32_t next_beat = 0;
   while (true) {
     watchdog_update();
+    check_bootsel_req();
     tud_task();
     uint32_t now = to_ms_since_boot(get_absolute_time());
     if (now >= next_beat) {
@@ -682,6 +696,7 @@ int main(void) {
 #endif
   while (true) {
     watchdog_update();
+    check_bootsel_req();
     tud_task();
 #if defined(DEV_CDC)
     dbg_drain();

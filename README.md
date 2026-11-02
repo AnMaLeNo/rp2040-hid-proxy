@@ -5,6 +5,17 @@ Carte : RP2040-Zero (clone AYWHP, brochage Waveshare).
 - Port USB-C natif : cote PC (la carte se presente comme la souris).
 - Port soude sur GP0 (D+), GP1 (D-), 5V, GND : cote souris (hote PIO-USB).
 - GP2 relie a GND : bouton de test, injecte un clic gauche tant qu'il est enfonce.
+- GP3 relie a GND : demande de retour en BOOTSEL (reflash), lue au demarrage et a chaque tour de boucle, toutes variantes. Pilotee par la carte de controle.
+
+## Carte de controle (seconde RP2040-Zero)
+
+Permet de reflasher le proxy sans toucher a l'USB. Firmware `firmware/proxy_ctrl.uf2`, sources `src/ctrl/`. Branchee au Mac par son USB-C, port serie USB.
+
+Cablage vers la carte proxy : GND vers GND ; GP13 (controle) vers GP3 (proxy) ; facultatif GP14 vers la patte utile du bouton RESET (signal RUN) et GP15 vers la patte utile du bouton BOOT (signal QSPI_SS). Sorties en collecteur ouvert (flottantes au repos, 0 pour appuyer).
+
+Schema Waveshare RP2040-Zero (RP2040_Zero.pdf) : Key2 (RESET) entre RUN et GND, Key1 (BOOT) entre QSPI_SS_N et GND. Wiki Waveshare : BOOT + RESET, relacher RESET puis BOOT, fait apparaitre le disque RPI-RP2 sans debrancher.
+
+Commandes serie : `g` = GP3 du proxy a 0 pendant 4 s (BOOTSEL logiciel), `r` = reset par RUN, `b` = BOOTSEL par les boutons, `?` = etat des lignes.
 
 ## Fichiers
 
