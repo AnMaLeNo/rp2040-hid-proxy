@@ -1,0 +1,17 @@
+ounted=1 cfg=0 GP2=1
+[proxy] t=114015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] t=115015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] t=116015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] t=117015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] t=118015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] t=119015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] t=120015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] t=121015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] t=122015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] umount daddr=1
+[proxy] t=123015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[1:] USBH Device Attach
+[proxy] t=124015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] hid mount daddr=1 idx=0 itf=0 proto=2 desc_len=67 btn=1/0/01
+[proxy] hid mount daddr=1 idx=1 itf=1 proto=0 desc_len=151 btn=0/0/00
+[proxy] mount daddr=1 vid=046d pid=c08b n_itf=2 ready=0

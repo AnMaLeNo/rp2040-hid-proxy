@@ -168,7 +168,36 @@ typedef struct {
   volatile bool pending;
   uint16_t pending_len;
   uint8_t  pending_buf[REPORT_LEN];
+  // Horodatage (time_us_32) : reception depuis la souris, rapport en vol vers le PC, rapport en attente
+  uint32_t t_rx, t_inflight, t_pending;
 } hid_itf_t;
+
+// Latence ajoutee par le proxy : de la reception du rapport (coeur 1) a la fin de
+// la lecture par le PC (tud_hid_report_complete_cb). Histogramme par pas de 50 us.
+#define LAT_BUCKET_US 50
+#define LAT_BUCKETS   64
+static struct {
+  uint32_t n, sum, min, max, over;
+  uint32_t hist[LAT_BUCKETS];
+} lat;
+
+static void lat_add(uint32_t dt) {
+  lat.n++;
+  lat.sum += dt;
+  if (lat.n == 1 || dt < lat.min) lat.min = dt;
+  if (dt > lat.max) lat.max = dt;
+  uint32_t b = dt / LAT_BUCKET_US;
+  if (b < LAT_BUCKETS) lat.hist[b]++; else lat.over++;
+}
+
+static uint32_t lat_percentile(uint32_t pct) {
+  uint32_t target = (lat.n * pct + 99) / 100, acc = 0;
+  for (uint32_t b = 0; b < LAT_BUCKETS; b++) {
+    acc += lat.hist[b];
+    if (acc >= target) return (b + 1) * LAT_BUCKET_US;
+  }
+  return LAT_BUCKETS * LAT_BUCKET_US;
+}
 
 static struct {
   volatile bool ready;
@@ -433,11 +462,14 @@ static void send_to_pc(uint8_t idx, uint8_t const* report, uint16_t len) {
   int8_t inst = g.itf_to_inst[idx];
   if (inst < 0 || !tud_mounted()) return;
   if (len > REPORT_LEN) len = REPORT_LEN;
-  if (!tud_hid_n_report((uint8_t) inst, 0, report, len)) {
-    hid_itf_t* it = &g.itf[idx];
+  hid_itf_t* it = &g.itf[idx];
+  if (tud_hid_n_report((uint8_t) inst, 0, report, len)) {
+    it->t_inflight = it->t_rx;
+  } else {
     if (it->pending) g.dropped++;
     memcpy(it->pending_buf, report, len);
     it->pending_len = len;
+    it->t_pending = it->t_rx;
     it->pending = true;
   }
 }
@@ -445,6 +477,7 @@ static void send_to_pc(uint8_t idx, uint8_t const* report, uint16_t len) {
 void tuh_hid_report_received_cb(uint8_t daddr, uint8_t idx, uint8_t const* report, uint16_t len) {
   if (idx >= MAX_HID_ITF) return;
   hid_itf_t* it = &g.itf[idx];
+  it->t_rx = time_us_32();
   if (len > REPORT_LEN) len = REPORT_LEN;
   memcpy(it->last, report, len);
   it->last_len = len;
@@ -628,8 +661,10 @@ void tud_hid_report_complete_cb(uint8_t instance, uint8_t const* report, uint16_
   int8_t idx = instance < MAX_HID_ITF ? g.inst_to_itf[instance] : -1;
   if (idx < 0) return;
   hid_itf_t* it = &g.itf[idx];
+  if ((int8_t) idx == g.mouse_itf) lat_add(time_us_32() - it->t_inflight);
   if (it->pending) {
     it->pending = false;
+    it->t_inflight = it->t_pending;
     tud_hid_n_report(instance, 0, it->pending_buf, it->pending_len);
   }
 }
@@ -759,6 +794,13 @@ int main(void) {
       next_beat = now + 1000;
       DBG("t=%lu ms led=%06lx ready=%u n_itf=%u exposed=%u connected=%u mounted=%u cfg=%u GP2=%u\r\n", (unsigned long) now,
           (unsigned long) led_color, g.ready, g.n_itf, exposed, tud_connected(), tud_mounted(), dev_cfg_len, gpio_get(PIN_BOOTSEL_REQ));
+      if (lat.n) {
+        DBG("lat n=%lu min=%lu avg=%lu p50<=%lu p99<=%lu max=%lu over3200=%lu dropped=%lu (us, souris->PC)\r\n",
+            (unsigned long) lat.n, (unsigned long) lat.min, (unsigned long) (lat.sum / lat.n),
+            (unsigned long) lat_percentile(50), (unsigned long) lat_percentile(99), (unsigned long) lat.max,
+            (unsigned long) lat.over, (unsigned long) g.dropped);
+        memset(&lat, 0, sizeof(lat));
+      }
     }
 #endif
     // LED : etat du coeur 1 (blanc faible, bleu, jaune, vert, rouge) tant que le PC

@@ -68,8 +68,20 @@ Injection : la position du bouton 1 (page Button, usage 1) est trouvee en parcou
 - Au passage, main.c a ete unifie : toutes les variantes font `tud_init` au demarrage, `tud_disconnect` tant que la souris n'est pas copiee, puis `tud_connect` (variante DEV : d'abord le port serie seul, sauf `DEV_LATE`). La sequence a ete verifiee avec `proxy_souris_dev_late` (G502 enumeree en 2 s). `proxy_souris_dev_plainfirst` est une variante d'experience (descripteurs purs 5 s, puis bascule souris + port serie).
 - Le message Finder « Ejectez RPI-RP2 avant de le deconnecter » apparait a chaque flash : la carte redemarre d'elle-meme apres la copie du uf2. Sans consequence.
 
+## Mesure de latence (2026-11-02, premiere mesure)
+
+Methode : dans le firmware, chaque rapport de l'interface souris est horodate (`time_us_32`) a sa reception depuis la souris sur le coeur 1 (`tuh_hid_report_received_cb`) et a la fin de sa lecture par le PC (`tud_hid_report_complete_cb`). La difference est la latence ajoutee par le proxy (traitement + attente du prochain polling du PC). Histogramme par pas de 50 us, statistiques par fenetre d'une seconde, imprimees sur le port serie en variante dev (`lat n=... min avg p50 p99 max`). Fichier : `captures/latence4.txt`.
+
+Resultat, 30 s, environ 15 000 rapports, G502 via le proxy vers le Mac : latence ajoutee entre 0,07 et 1,05 ms, moyenne environ 0,5 ms, 0 rapport perdu. Dans chaque fenetre d'une seconde, min et max different de 20 a 30 us seulement : la valeur glisse lentement de 0,07 a 1,05 ms puis repart a 0,07 ms, signature du dephasage entre le polling 1 kHz du proxy vers la souris et le polling 1 kHz du Mac vers le proxy (deux horloges independantes). Pas de gigue mesurable au-dela de ce glissement.
+
+Limites : mesure en variante dev (port serie actif sur le coeur 0), horloge du proxy uniquement (pas de mesure de bout en bout avec un instrument externe). A refaire en variante transparente avec une methode externe. Piste d'amelioration : caler la phase du polling souris sur les SOF du PC pour rester vers 0,1 a 0,2 ms.
+
+## Problemes ouverts
+
+- Au demarrage du proxy avec la souris deja branchee, il arrive que la souris ne soit pas vue du tout (`n_itf=0`, un `umount` sans montage HID) ; le redemarrage automatique ne couvre que le cas « interface vue mais copie non terminee ». Debrancher et rebrancher la souris corrige. A traiter (reset du bus PIO-USB si aucun appareil en N secondes).
+
 ## Hypotheses encore a verifier
 
-- La G502 n'a que des interfaces HID (pas d'autre classe). A confirmer avec son descripteur de configuration, pas encore capture directement.
-- Le cote PC du proxy n'a pas encore ete valide avec la G502.
-- Aucune mesure de latence n'a encore ete faite.
+- La G502 n'a que des interfaces HID : confirme par le descripteur de configuration copie (59 octets, 2 interfaces HID).
+- Le relais des commandes G HUB / HID++ (SET_REPORT, GET_REPORT vers l'interface 1) n'a pas ete teste avec le logiciel Logitech.
+- La latence n'a ete mesuree qu'avec l'horloge du proxy, en variante dev (voir plus haut).
