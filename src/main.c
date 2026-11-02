@@ -131,16 +131,16 @@ static void ws2812_put(uint32_t rgb) {
   busy_wait_us_32(80);
 }
 
-// Bouton de test : GP2 relie a GND = clic injecte sur la souris
-#define PIN_INJECT        2
-// Ligne de reflash : GP3 tire a GND (par la carte de controle) = retour en BOOTSEL.
+// Bouton de test : GP3 relie a GND = clic injecte sur la souris
+#define PIN_INJECT        3
+// Ligne de reflash : GP2 tire a GND (par la carte de controle) = retour en BOOTSEL.
 // Verifiee tout au debut de main() et a chaque tour de boucle, dans toutes les
 // variantes, donc aussi la transparente. Le chien de garde (3 s) ramene au test
 // de demarrage si le firmware se fige.
-#define PIN_BOOTSEL_REQ   3
+#define PIN_BOOTSEL_REQ   2
 static inline void check_bootsel_req(void) {
   if (!gpio_get(PIN_BOOTSEL_REQ)) {
-    DBG("GP3 a 0 : retour en BOOTSEL\r\n");
+    DBG("GP2 a 0 : retour en BOOTSEL\r\n");
     reset_usb_boot(0, 0);
   }
 }
@@ -757,7 +757,7 @@ int main(void) {
     uint32_t now = to_ms_since_boot(get_absolute_time());
     if (now >= next_beat) {
       next_beat = now + 1000;
-      DBG("t=%lu ms led=%06lx ready=%u n_itf=%u exposed=%u connected=%u mounted=%u cfg=%u GP3=%u\r\n", (unsigned long) now,
+      DBG("t=%lu ms led=%06lx ready=%u n_itf=%u exposed=%u connected=%u mounted=%u cfg=%u GP2=%u\r\n", (unsigned long) now,
           (unsigned long) led_color, g.ready, g.n_itf, exposed, tud_connected(), tud_mounted(), dev_cfg_len, gpio_get(PIN_BOOTSEL_REQ));
     }
 #endif
