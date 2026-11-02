@@ -1,0 +1,9 @@
+[proxy] t=8013 ms led=002000 ready=1 n_itf=2 exposed=1 mounted=1 cfg=125
+[proxy] t=9013 ms led=002000 ready=1 n_itf=2 exposed=1 mounted=1 cfg=125
+[proxy] t=10013 ms led=002000 ready=1 n_itf=2 exposed=1 mounted=1 cfg=125
+[proxy] t=11013 ms led=002000 ready=1 n_itf=2 exposed=1 mounted=1 cfg=125
+[proxy] t=12013 ms led=002000 ready=1 n_itf=2 exposed=1 mounted=1 cfg=125
+[proxy] t=13013 ms led=002000 ready=1 n_itf=2 exposed=1 mounted=1 cfg=125
+[proxy] t=14013 ms led=002000 ready=1 n_itf=2 exposed=1 mounted=1 cfg=125
+[proxy] t=15013 ms led=002000 ready=1 n_itf=2 exposed=1 mounted=1 cfg=125
+[proxy] t=16013 ms led=002000 ready=1 n_itf=2 exposed=1 mounted=1 cfg=125

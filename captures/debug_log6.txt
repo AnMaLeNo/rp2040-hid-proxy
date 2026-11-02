@@ -1,0 +1,66 @@
+_t) = 86
+sizeof(hcd_event_t) = 12
+sizeof(_ctrl_xfer) = 16
+sizeof(tuh_xfer_t) = 24
+sizeof(tu_fifo_t) = 20
+sizeof(tu_edpt_stream_t) = 36
+HID init
+sizeof(hidh_interface_t) = 14
+HUB init
+  Open EP 81 with Size = 8
+  Allocated 64 bytes (0x50100180)
+  Open EP 02 with Size = 64
+  Allocated 128 bytes (0x501001C0)
+  Open EP 82 with Size = 64
+  Allocated 128 bytes (0x50100240)
+  Bind EP 81 to driver id 0
+  Bind EP 02 to driver id 0
+  Bind EP 82 to driver id 0
+[proxy] t=1013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=2013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=3013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=4013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=5013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=6013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=7013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=8013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=9013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=10013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=11013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=12013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=13013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=14013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=15013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=16013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=17013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=18013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=19013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=20013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=21013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=22013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=23013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=24013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=25013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=26013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=27013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=28013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=29013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=30013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=31013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=32013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=33013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=34013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=35013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=36013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=37013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=38013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=39013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=40013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=41013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=42013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=43013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=44013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=45013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=46013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=47013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0
+[proxy] t=48013 ms led=080808 ready=0 n_itf=0 GP0=0 GP1=0

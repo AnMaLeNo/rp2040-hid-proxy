@@ -1,0 +1,42 @@
+ 64
+  Allocated 128 bytes (0x50100240)
+  Bind EP 81 to driver id 0
+  Bind EP 02 to driver id 0
+  Bind EP 82 to driver id 0
+[proxy] t=1013 ms led=080808 ready=0 n_itf=0
+[proxy] t=2013 ms led=080808 ready=0 n_itf=0
+[proxy] t=3013 ms led=080808 ready=0 n_itf=0
+[proxy] t=4013 ms led=080808 ready=0 n_itf=0
+[proxy] t=5013 ms led=080808 ready=0 n_itf=0
+[proxy] t=6013 ms led=080808 ready=0 n_itf=0
+[proxy] t=7013 ms led=080808 ready=0 n_itf=0
+[proxy] t=8013 ms led=080808 ready=0 n_itf=0
+[proxy] t=9013 ms led=080808 ready=0 n_itf=0
+[proxy] t=10013 ms led=080808 ready=0 n_itf=0
+[proxy] t=11013 ms led=080808 ready=0 n_itf=0
+[proxy] t=12013 ms led=080808 ready=0 n_itf=0
+[proxy] t=13013 ms led=080808 ready=0 n_itf=0
+[proxy] t=14013 ms led=080808 ready=0 n_itf=0
+[proxy] t=15013 ms led=080808 ready=0 n_itf=0
+[proxy] t=16013 ms led=080808 ready=0 n_itf=0
+[proxy] t=17013 ms led=080808 ready=0 n_itf=0
+[proxy] t=18013 ms led=080808 ready=0 n_itf=0
+[proxy] t=19013 ms led=080808 ready=0 n_itf=0
+[proxy] t=20013 ms led=080808 ready=0 n_itf=0
+[proxy] t=21013 ms led=080808 ready=0 n_itf=0
+[proxy] t=22013 ms led=080808 ready=0 n_itf=0
+[proxy] t=23013 ms led=080808 ready=0 n_itf=0
+[proxy] t=24013 ms led=080808 ready=0 n_itf=0
+[proxy] t=25013 ms led=080808 ready=0 n_itf=0
+[proxy] t=26013 ms led=080808 ready=0 n_itf=0
+[proxy] t=27013 ms led=080808 ready=0 n_itf=0
+[proxy] t=28013 ms led=080808 ready=0 n_itf=0
+[proxy] t=29013 ms led=080808 ready=0 n_itf=0
+[proxy] t=30013 ms led=080808 ready=0 n_itf=0
+[proxy] t=31013 ms led=080808 ready=0 n_itf=0
+[proxy] t=32013 ms led=080808 ready=0 n_itf=0
+[proxy] t=33013 ms led=080808 ready=0 n_itf=0
+[proxy] t=34013 ms led=080808 ready=0 n_itf=0
+[proxy] t=35013 ms led=080808 ready=0 n_itf=0
+[proxy] t=36013 ms led=080808 ready=0 n_itf=0
+[proxy] t=37013 ms led=080808 ready=0 n_itf=0

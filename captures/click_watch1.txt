@@ -1,0 +1,4 @@
+debut etat=false
+1793652058.119 bouton gauche PRESSE
+1793652058.219 bouton gauche RELACHE
+fin transitions=2
