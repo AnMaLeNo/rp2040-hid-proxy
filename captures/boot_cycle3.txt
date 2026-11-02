@@ -1,0 +1,11 @@
+montee
+[proxy] PC demande la chaine 4
+[proxy] PC demande la chaine 4
+[proxy] PC demande la chaine 0
+[proxy] hid mount daddr=1 idx=0 itf=0 proto=2 desc_len=67 btn=1/0/01
+[proxy] hid mount daddr=1 idx=1 itf=1 proto=0 desc_len=151 btn=0/0/00
+[proxy] mount daddr=1 vid=046d pid=c08b n_itf=2 ready=0
+[proxy] t=1015 ms led=201000 ready=0 n_itf=2 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] t=2015 ms led=201000 ready=0 n_itf=2 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] t=3015 ms led=201000 ready=0 n_itf=2 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] enumeration souris bloquee (n_itf=2) : redemarrage

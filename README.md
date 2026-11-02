@@ -78,7 +78,7 @@ Limites : mesure en variante dev (port serie actif sur le coeur 0), horloge du p
 
 ## Problemes ouverts
 
-- Au demarrage du proxy avec la souris deja branchee, il arrive que la souris ne soit pas vue du tout (`n_itf=0`, un `umount` sans montage HID) ; le redemarrage automatique ne couvre que le cas « interface vue mais copie non terminee ». Debrancher et rebrancher la souris corrige. A traiter (reset du bus PIO-USB si aucun appareil en N secondes).
+- Au demarrage du proxy avec la souris deja branchee, il est arrive (2 fois sur ~8 demarrages) que la souris ne soit pas vue (`n_itf=0`, un `umount` sans montage HID) : TinyUSB ne relance jamais une enumeration echouee. Correctif (2026-11-02, soir) : si aucun appareil n'est monte 4 s apres le demarrage ou le dernier essai, `tuh_rhport_reset_bus(1, true/false)` force SE0 20 ms ; Pico-PIO-USB emet deconnexion puis connexion et l'enumeration repart. Le cas « interface vue mais copie non terminee en 3 s » redemarre la carte. Verifie sur 3 redemarrages consecutifs (souris vue a chaque fois, reset non declenche) ; le defaut d'origine n'a pas ete reproduit depuis, donc le correctif n'est pas encore prouve sur un cas reel.
 
 ## Hypotheses encore a verifier
 

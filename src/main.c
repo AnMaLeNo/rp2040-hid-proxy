@@ -506,9 +506,24 @@ static void core1_main(void) {
   // avec la G502 : process_set_config ASSERT FAILED), la carte redemarre. Rien
   // n'est encore expose au PC a ce stade, le redemarrage est invisible pour lui.
   uint32_t stall_since = 0;
+  // Reprise : si aucun appareil n'est monte 4 s apres le demarrage ou apres le
+  // dernier essai, on force un reset du bus souris. Pico-PIO-USB voit SE0 puis le
+  // retour au repos : evenement de deconnexion puis de connexion, TinyUSB relance
+  // l'enumeration (il ne reessaie jamais seul apres un echec, observe : umount sans
+  // montage HID au demarrage avec la G502 deja branchee).
+  uint32_t last_bus_reset = 0;
   while (true) {
     tuh_task();
     uint32_t now = to_ms_since_boot(get_absolute_time());
+    if (g.n_itf == 0 && !g.ready && now - last_bus_reset > 4000) {
+      last_bus_reset = now;
+      if (now > 4000) {
+        DBG("aucun appareil souris monte : reset du bus PIO-USB\r\n");
+        tuh_rhport_reset_bus(1, true);
+        sleep_ms(20);
+        tuh_rhport_reset_bus(1, false);
+      }
+    }
     if (g.n_itf > 0 && !g.ready) {
       if (stall_since == 0) stall_since = now;
       else if (now - stall_since > 3000) {

@@ -43,7 +43,7 @@ done
 [ -d /Volumes/RPI-RP2 ] || { echo "pas de RPI-RP2"; exit 1; }
 
 cp "$UF2" /Volumes/RPI-RP2/ && echo "flash ok: $UF2"
-sleep 8
+sleep 12   # la variante dev change d identite USB 3 s apres le demarrage
 
 P=$(proxy_tty)
 echo "port=$P"

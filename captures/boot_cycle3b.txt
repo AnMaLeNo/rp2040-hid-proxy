@@ -1,0 +1,33 @@
+1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=374 min=490 avg=498 p50<=500 p99<=550 max=509 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=21015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=213 min=506 avg=525 p50<=550 p99<=550 max=537 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=22015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=370 min=540 avg=554 p50<=600 p99<=600 max=573 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=23015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=736 min=569 avg=588 p50<=600 p99<=650 max=604 over3200=0 [proxy] t=24015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=869 min=599 avg=617 p50<=650 p99<=650 max=635 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=25015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=929 min=630 avg=647 p50<=650 p99<=700 max=665 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=26015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=759 min=660 avg=680 p50<=700 p99<=700 max=697 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=27015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=692 min=693 avg=711 p50<=750 p99<=750 max=728 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=28015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=590 min=724 avg=738 p50<=750 p99<=800 max=756 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=29015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=508 min=762 avg=773 p50<=800 p99<=800 max=790 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=30015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=298 min=786 avg=801 p50<=850 p99<=850 max=820 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=31015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=49 min=818 avg=823 p50<=850 p99<=850 max=830 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=32015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=34 min=871 avg=877 p50<=900 p99<=900 max=881 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=33015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=482 min=881 avg=903 p50<=950 p99<=950 max=913 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=34015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=601 min=910 avg=922 p50<=950 p99<=950 max=935 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=35015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=1 min=943 avg=943 p50<=950 p99<=950 max=943 over3200=0 dropped=0 (us, souris->PC)
+[proxy] t=36015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] t=37015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
