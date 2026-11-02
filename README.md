@@ -76,6 +76,12 @@ Resultat, 30 s, environ 15 000 rapports, G502 via le proxy vers le Mac : latence
 
 Limites : mesure en variante dev (port serie actif sur le coeur 0), horloge du proxy uniquement (pas de mesure de bout en bout avec un instrument externe). A refaire en variante transparente avec une methode externe. Piste d'amelioration : caler la phase du polling souris sur les SOF du PC pour rester vers 0,1 a 0,2 ms.
 
+## Asservissement de phase (2026-11-02, soir)
+
+Principe : le PC envoie un SOF par ms ; TinyUSB le signale par `tud_sof_cb` (coeur 0, `tud_sof_cb_enable(true)`, a refaire dans `tud_mount_cb` car le reset de bus efface l'abonnement). Cote souris, Pico-PIO-USB cadence son SOF avec un timer repetitif de 1000 us ; patch `src/pico-pio-usb-sof-phase.patch` (a appliquer sur Pico-PIO-USB 0.7.3) qui expose l'instant du SOF hote (`pio_usb_host_sof_us`) et la periode (`pio_usb_host_set_sof_period_us`). Le coeur 1 mesure la phase (SOF hote - SOF PC, mod 1000) et corrige la periode de +/-1 us par trame vers une phase cible. La phase cible est ajustee chaque seconde a partir de la latence moyenne mesuree (cible `PHASE_LAT_TARGET_US` = 200 us). Actif dans toutes les variantes.
+
+Resultat (`captures/phase2.txt`, 45 s, ~30 000 rapports, variante dev) : latence ajoutee entre 196 et 205 us, moyenne 200 us, phase tenue a +/-4 us, 0 rapport perdu, quelques pics isoles jusqu'a 430 us. Avant asservissement (`captures/latence4.txt`) : 70 a 1050 us en glissement.
+
 ## Problemes ouverts
 
 - Au demarrage du proxy avec la souris deja branchee, il est arrive (2 fois sur ~8 demarrages) que la souris ne soit pas vue (`n_itf=0`, un `umount` sans montage HID) : TinyUSB ne relance jamais une enumeration echouee. Correctif (2026-11-02, soir) : si aucun appareil n'est monte 4 s apres le demarrage ou le dernier essai, `tuh_rhport_reset_bus(1, true/false)` force SE0 20 ms ; Pico-PIO-USB emet deconnexion puis connexion et l'enumeration repart. Le cas « interface vue mais copie non terminee en 3 s » redemarre la carte. Verifie sur 3 redemarrages consecutifs (souris vue a chaque fois, reset non declenche) ; le defaut d'origine n'a pas ete reproduit depuis, donc le correctif n'est pas encore prouve sur un cas reel.

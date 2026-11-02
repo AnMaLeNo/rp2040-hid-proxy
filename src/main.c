@@ -190,6 +190,55 @@ static void lat_add(uint32_t dt) {
   if (b < LAT_BUCKETS) lat.hist[b]++; else lat.over++;
 }
 
+// Asservissement de phase : le SOF hote (vers la souris) est cale sur le SOF du PC
+// avec une phase cible. Le PC lit notre endpoint a un instant fixe de sa trame ; en
+// placant la reception du rapport souris juste avant, la latence ajoutee tombe vers
+// la cible au lieu de glisser de 0 a 1 ms.
+#define PHASE_LAT_TARGET_US 200
+static volatile uint32_t pc_sof_us;         // instant du dernier SOF recu du PC (coeur 0)
+static volatile bool     pc_sof_seen;
+static volatile int32_t  phase_target = 500; // phase cible SOF hote - SOF PC, en us, 0..999
+static volatile int32_t  phase_now;          // phase mesuree
+static volatile int32_t  sof_period = 1000;  // periode appliquee au timer SOF hote
+static volatile uint32_t phase_lat_avg;      // derniere latence moyenne utilisee pour regler la cible
+
+void tud_sof_cb(uint32_t frame_count) {
+  (void) frame_count;
+  pc_sof_us = time_us_32();
+  pc_sof_seen = true;
+}
+
+// Appele par le coeur 1 a chaque tour : une correction de +/-1 us par trame
+static void phase_lock_step(void) {
+  static uint32_t last_host_sof;
+  uint32_t h = pio_usb_host_sof_us;
+  if (h == last_host_sof || !pc_sof_seen) return;
+  last_host_sof = h;
+  int32_t ph = (int32_t) ((h - pc_sof_us) % 1000u);
+  phase_now = ph;
+  int32_t err = ph - phase_target;
+  if (err > 500) err -= 1000;
+  if (err < -500) err += 1000;
+  int32_t period = 1000;
+  if (err > 3) period = 999;        // SOF hote trop tard : raccourcir
+  else if (err < -3) period = 1001; // trop tot : allonger
+  if (period != sof_period) { sof_period = period; pio_usb_host_set_sof_period_us(period); }
+}
+
+// Regle la phase cible a partir de la latence moyenne mesuree sur la derniere seconde.
+// Reception plus tardive (phase plus grande) = latence plus faible, jusqu'au moment ou
+// le rapport manque le polling du PC (latence ~1 ms) : on corrige doucement.
+static void phase_target_update(uint32_t lat_avg) {
+  phase_lat_avg = lat_avg;
+  int32_t delta = ((int32_t) lat_avg - PHASE_LAT_TARGET_US) / 2;
+  if (delta > 150) delta = 150;
+  if (delta < -150) delta = -150;
+  int32_t t = phase_target + delta;
+  while (t < 0) t += 1000;
+  while (t >= 1000) t -= 1000;
+  phase_target = t;
+}
+
 static uint32_t lat_percentile(uint32_t pct) {
   uint32_t target = (lat.n * pct + 99) / 100, acc = 0;
   for (uint32_t b = 0; b < LAT_BUCKETS; b++) {
@@ -514,6 +563,7 @@ static void core1_main(void) {
   uint32_t last_bus_reset = 0;
   while (true) {
     tuh_task();
+    phase_lock_step();
     uint32_t now = to_ms_since_boot(get_absolute_time());
     if (g.n_itf == 0 && !g.ready && now - last_bus_reset > 4000) {
       last_bus_reset = now;
@@ -610,7 +660,9 @@ uint16_t const* tud_descriptor_string_cb(uint8_t index, uint16_t langid) {
 }
 #endif
 
-void tud_mount_cb(void) { DBG("PC : SET_CONFIGURATION recu, carte montee\r\n"); }
+void tud_mount_cb(void) {
+  tud_sof_cb_enable(true);   // le reset de bus du PC efface le consommateur SOF de TinyUSB
+ DBG("PC : SET_CONFIGURATION recu, carte montee\r\n"); }
 void tud_umount_cb(void) { DBG("PC : carte demontee\r\n"); }
 
 uint8_t const* tud_hid_descriptor_report_cb(uint8_t instance) {
@@ -751,9 +803,11 @@ int main(void) {
   // de la souris ne sont pas copies, sauf en DEV_CDC sans DEV_LATE ou le port
   // serie seul est expose en attendant.
   tud_init(0);
+  tud_sof_cb_enable(true);
 #if !defined(DEV_CDC) || defined(DEV_LATE)
   tud_disconnect();
 #endif
+  uint32_t next_phase_update = 0;
   bool exposed = false;   // souris presente dans les descripteurs donnes au PC
 #if defined(DEV_CDC)
   uint32_t next_beat = 0;
@@ -803,6 +857,16 @@ int main(void) {
     }
 #endif
     if (exposed) poll_inject_button();
+    {
+      uint32_t tnow = to_ms_since_boot(get_absolute_time());
+      if (tnow >= next_phase_update) {
+        next_phase_update = tnow + 1000;
+        if (lat.n >= 50) phase_target_update(lat.sum / lat.n);
+#if !defined(DEV_CDC)
+        memset(&lat, 0, sizeof(lat));   // en dev c'est le battement qui remet a zero
+#endif
+      }
+    }
 #if defined(DEV_CDC)
     uint32_t now = to_ms_since_boot(get_absolute_time());
     if (now >= next_beat) {
@@ -816,6 +880,7 @@ int main(void) {
             (unsigned long) lat.over, (unsigned long) g.dropped);
         memset(&lat, 0, sizeof(lat));
       }
+      DBG("phase now=%ld target=%ld period=%ld pc_sof=%u\r\n", (long) phase_now, (long) phase_target, (long) sof_period, pc_sof_seen);
     }
 #endif
     // LED : etat du coeur 1 (blanc faible, bleu, jaune, vert, rouge) tant que le PC

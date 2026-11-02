@@ -1,0 +1,32 @@
+diff --git a/src/pio_usb.h b/src/pio_usb.h
+index 30a87d3..a670edd 100644
+--- a/src/pio_usb.h
++++ b/src/pio_usb.h
+@@ -14,6 +14,9 @@ int pio_usb_host_add_port(uint8_t pin_dp, PIO_USB_PINOUT pinout);
+ void pio_usb_host_task(void);
+ void pio_usb_host_stop(void);
+ void pio_usb_host_restart(void);
++// proxy-souris : instant (time_us_32) du dernier SOF hote, et periode du timer SOF en us (1000 nominal)
++extern volatile uint32_t pio_usb_host_sof_us;
++void pio_usb_host_set_sof_period_us(int32_t us);
+ uint32_t pio_usb_host_get_frame_number(void);
+ 
+ // Call this every 1ms when skip_alarm_pool is true.
+diff --git a/src/pio_usb_host.c b/src/pio_usb_host.c
+index 7790622..1e04897 100644
+--- a/src/pio_usb_host.c
++++ b/src/pio_usb_host.c
+@@ -376,8 +376,13 @@ void __not_in_flash_func(pio_usb_host_frame)(void) {
+       pio_usb_ll_encode_tx_data(sof_packet, sizeof(sof_packet), sof_packet_encoded);
+ }
+ 
++// proxy-souris : instant du SOF hote et reglage de la periode (asservissement de phase)
++volatile uint32_t pio_usb_host_sof_us;
++void pio_usb_host_set_sof_period_us(int32_t us) { sof_rt.delay_us = -(int64_t) us; }
++
+ static bool __no_inline_not_in_flash_func(sof_timer)(repeating_timer_t *_rt) {
+   (void)_rt;
++  pio_usb_host_sof_us = time_us_32();
+ 
+   pio_usb_host_frame();
+ 
