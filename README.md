@@ -99,6 +99,15 @@ Mesures du clic (`tools/click_latency.py`, horloge epoch du Mac pour la commande
 
 Un premier essai HID (`click_latency2.txt`) a montre 2 clics sur 10 non vus et un appui de 1,8 s ; non reproduit ensuite sur 30 clics avec journal (chaque front vu par le proxy). Cause non identifiee.
 
+## G HUB a travers le proxy (2026-11-03)
+
+Valide : G HUB detecte la G502 a travers le proxy et les reglages fonctionnent (effets lumineux, intensite, frequence, affichage du DPI qui suit les boutons de la souris). En 40 s, 60 commandes HID++ variees (rapports 0x10 et 0x11 sur l'interface 1) ont ete relayees, `captures/ghub4.txt`.
+
+Deux obstacles rencontres, dans l'ordre :
+
+1. macOS refusait a `lghub_agent` l'ouverture des peripheriques HID (`TCC deny IOHIDDeviceOpen` dans `log show`). G HUB montrait alors « G502 HERO, inactif » ou « connecte ton equipement ». Correction cote Mac : Reglages Systeme, Confidentialite et securite, Surveillance de l'entree, activer lghub et lghub_agent, puis relancer G HUB. Rien a voir avec le proxy.
+2. Avec l'autorisation, G HUB repetait la meme requete d'identification (`ff 00 1c ...`) sans reponse. Cause dans le proxy : TinyUSB cote PC (`hid_device.c`) retire l'octet d'identifiant de rapport avant d'appeler `tud_hid_set_report_cb`, alors que `tuh_hid_set_report` envoie le tampon tel quel, donc la souris recevait 6 octets au lieu de 7 et ignorait la commande. Correction : l'identifiant est remis en tete avant l'envoi a la souris ; pour GET_REPORT, TinyUSB device ajoute lui-meme l'identifiant, donc le proxy demande un octet de plus a la souris et retire le premier.
+
 ## Problemes ouverts
 
 - Au demarrage du proxy avec la souris deja branchee, il est arrive (2 fois sur ~8 demarrages) que la souris ne soit pas vue (`n_itf=0`, un `umount` sans montage HID) : TinyUSB ne relance jamais une enumeration echouee. Correctif (2026-11-02, soir) : si aucun appareil n'est monte 4 s apres le demarrage ou le dernier essai, `tuh_rhport_reset_bus(1, true/false)` force SE0 20 ms ; Pico-PIO-USB emet deconnexion puis connexion et l'enumeration repart. Le cas « interface vue mais copie non terminee en 3 s » redemarre la carte. Le 2026-11-03 le defaut est reapparu (`captures/click_wire_log2.txt`) et le reset de bus, declenche toutes les 4 s, n'a rien recupere : pendant un reset Pico-PIO-USB suspend la detection de deconnexion, donc le port racine reste marque connecte et aucun evenement de connexion n'est reemis. Correctif suivant : deconnexion simulee (`PIO_USB_ROOT_PORT(0)->connected = false`, `suspended = true`, bit `PIO_USB_INTS_DISCONNECT_BITS`), ce qui reproduit un debranchement ; apres 4 essais sans succes la carte redemarre. Ce correctif n'a pas encore ete observe en action sur un cas reel (la souris etait vue au demarrage suivant, sans que l'on sache si c'est grace a lui).
@@ -106,5 +115,5 @@ Un premier essai HID (`click_latency2.txt`) a montre 2 clics sur 10 non vus et u
 ## Hypotheses encore a verifier
 
 - La G502 n'a que des interfaces HID : confirme par le descripteur de configuration copie (59 octets, 2 interfaces HID).
-- Le relais des commandes G HUB / HID++ (SET_REPORT, GET_REPORT vers l'interface 1) n'a pas ete teste avec le logiciel Logitech.
+- Le relais des commandes G HUB / HID++ est valide pour SET_REPORT (voir plus haut) ; GET_REPORT n'a pas ete observe dans les echanges de G HUB, son chemin corrige n'est donc pas encore exerce.
 - La latence n'a ete mesuree qu'avec l'horloge du proxy, en variante dev (voir plus haut).

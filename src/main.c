@@ -460,6 +460,7 @@ static void process_requests(void) {
         break;
     }
     r->state = ok ? REQ_SENT : REQ_FAIL;
+    if (!ok) DBG("requete vers la souris refusee (type %u itf %u)\r\n", r->type, r->idx);
   }
 }
 
@@ -731,16 +732,20 @@ uint16_t tud_hid_get_report_cb(uint8_t instance, uint8_t report_id, hid_report_t
   r->idx = (uint8_t) idx;
   r->report_id = report_id;
   r->report_type = (uint8_t) report_type;
-  r->len = reqlen > REPORT_LEN ? REPORT_LEN : reqlen;
+  // La souris repond avec l'octet d'identifiant en tete ; TinyUSB device l'ajoute lui-meme
+  // avant nos donnees (hid_device.c), donc on demande un octet de plus et on le retire.
+  uint16_t off = report_id ? 1 : 0;
+  r->len = reqlen + off > REPORT_LEN ? REPORT_LEN : (uint16_t) (reqlen + off);
   r->state = REQ_PENDING;
   absolute_time_t deadline = make_timeout_time_ms(200);
   while (r->state != REQ_DONE && r->state != REQ_FAIL && !time_reached(deadline)) tight_loop_contents();
   uint16_t n = 0;
-  if (r->state == REQ_DONE) {
-    n = r->len > reqlen ? reqlen : r->len;
-    memcpy(buffer, r->data, n);
+  if (r->state == REQ_DONE && r->len > off) {
+    n = r->len - off > reqlen ? reqlen : (uint16_t) (r->len - off);
+    memcpy(buffer, r->data + off, n);
   }
   r->state = REQ_FREE;
+  DBG("PC GET_REPORT itf=%d id=%u type=%u demande=%u -> %u octets\r\n", idx, report_id, report_type, reqlen, n);
   return n;
 }
 
@@ -753,9 +758,17 @@ void tud_hid_set_report_cb(uint8_t instance, uint8_t report_id, hid_report_type_
   r->idx = (uint8_t) idx;
   r->report_id = report_id;
   r->report_type = (uint8_t) report_type;
-  r->len = bufsize > REPORT_LEN ? REPORT_LEN : bufsize;
-  memcpy(r->data, buffer, r->len);
+  // TinyUSB (hid_device.c) retire l'octet d'identifiant de rapport avant d'appeler ce
+  // callback, alors que tuh_hid_set_report envoie le tampon tel quel : on remet l'octet
+  // en tete, sinon la souris recoit un rapport HID++ de 6 octets au lieu de 7 et l'ignore.
+  uint16_t off = report_id ? 1 : 0;
+  r->len = bufsize + off > REPORT_LEN ? REPORT_LEN : (uint16_t) (bufsize + off);
+  if (off) r->data[0] = report_id;
+  memcpy(r->data + off, buffer, r->len - off);
   r->state = REQ_PENDING;
+  DBG("PC SET_REPORT itf=%d id=%u type=%u len=%u : %02x %02x %02x %02x %02x %02x %02x\r\n", idx, report_id, report_type, bufsize,
+      bufsize > 0 ? buffer[0] : 0, bufsize > 1 ? buffer[1] : 0, bufsize > 2 ? buffer[2] : 0, bufsize > 3 ? buffer[3] : 0,
+      bufsize > 4 ? buffer[4] : 0, bufsize > 5 ? buffer[5] : 0, bufsize > 6 ? buffer[6] : 0);
 }
 
 void tud_hid_set_protocol_cb(uint8_t instance, uint8_t protocol) {

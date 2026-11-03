@@ -1,0 +1,158 @@
+=12015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=497 target=500 period=1000 pc_sof=1
+[proxy] t=13015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] t=14015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 02 dc 01 04 90 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 02 dc 00 04 97 00
+[proxy] t=15015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] t=16015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=17015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 1c 00 00 a2 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0c 22 01 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 0a 3c 00 0c 80 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 02 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 0b 2c 01 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 05 6c 00 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 0a 3c 00 09 60 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 02 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 05 6c 00 00 00 00
+[proxy] t=18015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 0a 3c 00 04 b0 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 02 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 05 6c 00 00 00 00
+[proxy] t=19015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=8 min=447 avg=449 p50<=450 p99<=500 max=450 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=503 target=500 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 0a 3c 00 09 60 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 02 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 05 6c 00 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 0a 3c 00 0c 80 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 02 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 05 6c 00 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 0a 3c 00 19 00 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 02 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 05 6c 00 00 00 00
+[proxy] t=20015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=3 min=448 avg=449 p50<=450 p99<=500 max=451 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=497 target=500 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 02 dc 01 fb 71 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 02 dc 00 fb 77 00
+[proxy] t=21015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=1 min=447 avg=447 p50<=450 p99<=450 max=447 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=501 target=500 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 0a 3c 00 0c 80 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 02 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 05 6c 00 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 0a 3c 00 09 60 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 02 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 05 6c 00 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 0a 3c 00 04 b0 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 02 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 05 6c 00 00 00 00
+[proxy] t=22015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=17 min=363 avg=437 p50<=450 p99<=500 max=451 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=502 target=500 period=1000 pc_sof=1
+[proxy] t=23015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=497 target=500 period=1000 pc_sof=1
+[proxy] t=24015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 01 00
+[proxy] t=25015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=26015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=27015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=497 target=500 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 01 00
+[proxy] t=28015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=4 min=441 avg=444 p50<=450 p99<=450 max=447 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] t=29015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=7 min=441 avg=445 p50<=450 p99<=450 max=449 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=30015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=17 min=445 avg=448 p50<=450 p99<=500 max=451 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=497 target=500 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 02 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 05 6c 00 00 00 00
+[proxy] t=31015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=63 min=363 avg=446 p50<=450 p99<=500 max=453 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=497 target=623 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 02 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 05 6c 00 00 00 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 02 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 05 6c 00 00 00 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 02 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 05 6c 00 00 00 00
+[proxy] t=32015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=55 min=320 avg=326 p50<=350 p99<=450 max=445 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=619 target=686 period=1001 pc_sof=1
+[proxy] t=33015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=76 min=256 avg=261 p50<=300 p99<=300 max=265 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=684 target=716 period=1000 pc_sof=1
+[proxy] t=34015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=24 min=228 avg=231 p50<=250 p99<=250 max=235 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=715 target=716 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 01 00
+[proxy] t=35015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=9 min=145 avg=221 p50<=250 p99<=250 max=234 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=717 target=716 period=1000 pc_sof=1
+[proxy] t=36015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=716 target=716 period=1000 pc_sof=1
+[proxy] t=37015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=714 target=716 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 01 00
+[proxy] t=38015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=714 target=716 period=1000 pc_sof=1
+[proxy] t=39015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=716 target=716 period=1000 pc_sof=1
+[proxy] t=40015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=714 target=716 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 01 00
+[proxy] t=41015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=716 target=716 period=1000 pc_sof=1
+[proxy] t=42015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=713 target=716 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 02 3c 00 03 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 02 dc 00 fe ab 00
+[proxy] t=43015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=713 target=716 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 01 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 02 3c 00 03 00 00
+[proxy] t=44015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=723 target=716 period=999 pc_sof=1
+[proxy] t=45015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=716 target=716 period=1000 pc_sof=1
+[proxy] t=46015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=715 target=716 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 02 3c 00 03 00 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 01 00
+[proxy] t=47015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=717 target=716 period=1000 pc_sof=1
+[proxy] t=48015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=713 target=716 period=1000 pc_sof=1
+[proxy] t=49015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=716 target=716 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 01 00
+[proxy] t=50015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=715 target=716 period=1000 pc_sof=1
+[proxy] t=51015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=713 target=716 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 02 3c 00 03 00 00
+[proxy] t=52015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=714 target=716 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 02 3c 00 03 00 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 05 5c 00 00 01 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 02 3c 00 03 00 00
+[proxy] t=53015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=713 target=716 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 02 3c 00 03 00 00
+[proxy] t=54015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=715 target=716 period=1000 pc_sof=1
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 02 dc 00 01 c6 00
