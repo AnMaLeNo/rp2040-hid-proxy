@@ -1,0 +1,92 @@
+ mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=53015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] t=54015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=55015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=497 target=500 period=1000 pc_sof=1
+[proxy] t=56015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] t=57015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=58015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=501 target=500 period=1000 pc_sof=1
+[proxy] t=59015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=501 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=0 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=0 last_len=0 mounted=1
+[proxy] t=60015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=2 min=59223663 avg=59253651 p50<=3200 p99<=3200 max=59283639 over3200=2 dropped=0 (us, souris->PC)
+[proxy] phase now=506 target=500 period=999 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=0 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=0 last_len=0 mounted=1
+[proxy] t=61015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=2 min=60227673 avg=60257672 p50<=3200 p99<=3200 max=60287671 over3200=2 dropped=0 (us, souris->PC)
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=0 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=0 last_len=0 mounted=1
+[proxy] t=62015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=2 min=61230703 avg=61260703 p50<=3200 p99<=3200 max=61290704 over3200=2 dropped=0 (us, souris->PC)
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=0 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=0 last_len=0 mounted=1
+[proxy] t=63015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=2 min=62234734 avg=62264732 p50<=3200 p99<=3200 max=62294730 over3200=2 dropped=0 (us, souris->PC)
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=0 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=0 last_len=0 mounted=1
+[proxy] t=64015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=2 min=63236762 avg=63266273 p50<=3200 p99<=3200 max=63295785 over3200=2 dropped=0 (us, souris->PC)
+[proxy] phase now=496 target=500 period=1001 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=0 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=0 last_len=0 mounted=1
+[proxy] t=65015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=2 min=64237793 avg=64267301 p50<=3200 p99<=3200 max=64296809 over3200=2 dropped=0 (us, souris->PC)
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=0 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=0 last_len=0 mounted=1
+[proxy] t=66015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=2 min=65238827 avg=65268328 p50<=3200 p99<=3200 max=65297830 over3200=2 dropped=0 (us, souris->PC)
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=0 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=0 last_len=0 mounted=1
+[proxy] t=67015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=2 min=66240862 avg=66270361 p50<=3200 p99<=3200 max=66299860 over3200=2 dropped=0 (us, souris->PC)
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=0 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=0 last_len=0 mounted=1
+[proxy] t=68015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=2 min=67241891 avg=67271392 p50<=3200 p99<=3200 max=67300893 over3200=2 dropped=0 (us, souris->PC)
+[proxy] phase now=496 target=500 period=1001 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=0 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=0 last_len=0 mounted=1
+[proxy] t=69015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=2 min=68246924 avg=68276923 p50<=3200 p99<=3200 max=68306922 over3200=2 dropped=0 (us, souris->PC)
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] t=70015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] t=71015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=72015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1

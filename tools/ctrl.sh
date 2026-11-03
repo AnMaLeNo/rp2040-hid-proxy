@@ -1,30 +1,13 @@
 #!/bin/zsh
-# Envoie une commande a la carte de controle (produit USB "proxy-ctrl") et affiche sa reponse.
-# Usage : tools/ctrl.sh g|r|b|?
-# Le port serie est retrouve par le nom de produit USB, pas par /dev/cu.usbmodem* (le proxy
-# en mode dev expose aussi un port serie).
+# Envoie une commande a la carte de controle (HID vendeur 2E8A:10C1, outil tools/ctrlhid).
+# Commandes : g (BOOTSEL du proxy par GP2, 4 s), r (reset RUN), b (BOOTSEL par les boutons),
+#             P / R / k (clic par le fil : appui / relache / impulsion 60 ms),
+#             B (la carte de controle repasse en BOOTSEL), ? (etat des lignes).
+# Usage : tools/ctrl.sh <cmd>
+set -e
 CMD=${1:-?}
-TTY=$(ioreg -r -n "proxy-ctrl" -l -w0 2>/dev/null | grep -o '"IOCalloutDevice" = "[^"]*"' | head -1 | sed 's/.*= "//; s/"$//')
-if [ -z "$TTY" ]; then
-  echo "carte de controle introuvable (produit USB proxy-ctrl)" >&2
-  exit 1
+HERE=$(cd "$(dirname "$0")" && pwd)
+if [ ! -x "$HERE/ctrlhid" ]; then
+  clang -O2 -o "$HERE/ctrlhid" "$HERE/ctrlhid.c" -framework IOKit -framework CoreFoundation
 fi
-python3 - "$TTY" "$CMD" <<'PY'
-import os, sys, tty, fcntl, termios, struct, time, select
-fd = os.open(sys.argv[1], os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
-tty.setraw(fd)
-fcntl.ioctl(fd, termios.TIOCMBIS, struct.pack('I', termios.TIOCM_DTR | termios.TIOCM_RTS))
-time.sleep(0.2)
-os.write(fd, sys.argv[2].encode())
-buf = b''
-end = time.time() + (5.5 if sys.argv[2] == 'g' else 1.5)
-while time.time() < end:
-    if select.select([fd], [], [], 0.1)[0]:
-        try:
-            buf += os.read(fd, 4096)
-        except BlockingIOError:
-            pass
-        if b'\n' in buf:
-            break
-print(buf.decode(errors='replace').strip())
-PY
+exec "$HERE/ctrlhid" "$CMD"

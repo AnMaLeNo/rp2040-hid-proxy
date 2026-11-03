@@ -1,0 +1,90 @@
+1000 pc_sof=1
+[proxy] t=14015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=15015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[p[proxy] aucun appareil souris monte : reset du bus PIO-USB
+[proxy] t=16015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] t=17015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] t=18015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=497 target=500 period=1000 pc_sof=1
+[proxy] t=19015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] aucun appareil souris monte : reset du bus PIO-USB
+[proxy] t=20015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=21015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=502 target=500 period=1000 pc_sof=1
+[proxy] t=22015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=502 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] t=23015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] aucun appareil souris monte : reset du bus PIO-USB
+[proxy] t=24015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] t=25015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=497 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] t=26015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=496 target=500 period=1001 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] t=27015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] aucun appareil souris monte : reset du bus PIO-USB
+[proxy] t=28015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] t=29015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] t=30015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] t=31015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=-1 last_len=0 mounted=1
+[proxy] aucun appareil souris monte : reset du bus PIO-USB
+[proxy] t=32015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=33015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=34015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=35015 ms led=080808 ready=0 n_itf=0 exposed=0 connected=1 mounted=1 cfg=0 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] aucun appareil souris monte : reset du bus PIO-USB

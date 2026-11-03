@@ -15,6 +15,7 @@
 #include "hardware/watchdog.h"
 #include "pico/bootrom.h"
 #include "pio_usb.h"
+#include "pio_usb_ll.h"
 #include "tusb.h"
 
 // LED RGB WS2812 de la RP2040-Zero (GP16), code d'etat :
@@ -596,10 +597,32 @@ static void core1_main(void) {
     if (g.n_itf == 0 && !g.ready && now - last_bus_reset > 4000) {
       last_bus_reset = now;
       if (now > 4000) {
-        DBG("aucun appareil souris monte : reset du bus PIO-USB\r\n");
-        tuh_rhport_reset_bus(1, true);
-        sleep_ms(20);
-        tuh_rhport_reset_bus(1, false);
+        // Observe : apres certains demarrages le port racine PIO reste "connecte" alors
+        // que TinyUSB n'a aucun appareil (enumeration avortee) ; un reset de bus ne
+        // suffit pas car la detection de deconnexion est suspendue pendant le reset.
+        // On simule une deconnexion : Pico-PIO-USB emet l'evenement, TinyUSB ferme
+        // l'appareil, puis la ligne au repos (D+ haut) redeclenche une connexion et
+        // une enumeration, comme un debranchement/rebranchement de la souris.
+        root_port_t* root = PIO_USB_ROOT_PORT(0);
+        static uint8_t attempts;
+        attempts++;
+        DBG("aucun appareil souris monte (essai %u, racine connectee=%u) : deconnexion simulee\r\n",
+            attempts, root->connected);
+        if (attempts >= 4) {
+          DBG("toujours rien : redemarrage de la carte\r\n");
+          sleep_ms(300);
+          watchdog_reboot(0, 0, 0);
+          while (true) tight_loop_contents();
+        }
+        if (root->connected) {
+          root->connected = false;
+          root->suspended = true;
+          root->ints |= PIO_USB_INTS_DISCONNECT_BITS;
+        } else {
+          tuh_rhport_reset_bus(1, true);
+          sleep_ms(20);
+          tuh_rhport_reset_bus(1, false);
+        }
       }
     }
     if (g.n_itf > 0 && !g.ready) {
@@ -782,7 +805,10 @@ static void inject_set(bool pressed) {
   memset(rep, 0, len);
   if (it->btn_report_id) rep[0] = it->btn_report_id;
   if (have_last && it->btn_byte < len) rep[it->btn_byte] = it->last[it->btn_byte];
-  if (inject_bit(it, rep, len, pressed)) send_to_pc((uint8_t) g.mouse_itf, rep, len);
+  if (inject_bit(it, rep, len, pressed)) {
+    it->t_rx = time_us_32();   // la statistique "lat" mesure alors : injection -> lecture par le PC
+    send_to_pc((uint8_t) g.mouse_itf, rep, len);
+  }
 }
 
 static void poll_inject_button(void) {

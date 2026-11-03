@@ -1,0 +1,58 @@
+497 target=500 period=1000 pc_sof=1
+[proxy] t=9015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[p[proxy] t=10015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=11015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=12015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=497 target=500 period=1000 pc_sof=1
+[proxy] t=13015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] t=14015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=15015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=16015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=17015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] t=18015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=501 target=500 period=1000 pc_sof=1
+[proxy] t=19015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=501 target=500 period=1000 pc_sof=1
+[proxy] t=20015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=21015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=497 target=500 period=1000 pc_sof=1
+[proxy] t=22015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] t=23015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=501 target=500 period=1000 pc_sof=1
+[proxy] t=24015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=25015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=26015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] t=27015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=497 target=500 period=1000 pc_sof=1
+[proxy] t=28015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=497 target=500 period=1000 pc_sof=1
+[proxy] t=29015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=501 target=500 period=1000 pc_sof=1
+[proxy] t=30015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=31015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=32015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=33015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=34015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=35015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=36015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=37015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=496 target=500 period=1001 pc_sof=1

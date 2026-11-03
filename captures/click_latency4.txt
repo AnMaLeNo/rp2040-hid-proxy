@@ -1,0 +1,43 @@
+write 1793739606.604148 rt=482 us
+write 1793739607.608592 rt=593 us
+write 1793739608.611217 rt=440 us
+write 1793739609.614875 rt=419 us
+write 1793739610.617379 rt=647 us
+write 1793739611.618367 rt=348 us
+write 1793739612.619424 rt=587 us
+write 1793739613.621118 rt=592 us
+write 1793739614.621972 rt=546 us
+write 1793739615.627570 rt=590 us
+debut etat=false
+1793739606.607 bouton gauche PRESSE
+1793739606.669 bouton gauche RELACHE
+1793739607.610 bouton gauche PRESSE
+1793739607.670 bouton gauche RELACHE
+1793739608.613 bouton gauche PRESSE
+1793739608.673 bouton gauche RELACHE
+1793739609.618 bouton gauche PRESSE
+1793739609.677 bouton gauche RELACHE
+1793739610.619 bouton gauche PRESSE
+1793739610.679 bouton gauche RELACHE
+1793739611.620 bouton gauche PRESSE
+1793739611.680 bouton gauche RELACHE
+1793739612.621 bouton gauche PRESSE
+1793739612.681 bouton gauche RELACHE
+1793739613.624 bouton gauche PRESSE
+1793739613.685 bouton gauche RELACHE
+1793739614.625 bouton gauche PRESSE
+1793739614.685 bouton gauche RELACHE
+1793739615.629 bouton gauche PRESSE
+1793739615.689 bouton gauche RELACHE
+fin transitions=20
+write 1793739606.604148 rt=0.48 ms -> presse +2.85 ms
+write 1793739607.608592 rt=0.59 ms -> presse +1.41 ms
+write 1793739608.611217 rt=0.44 ms -> presse +1.78 ms
+write 1793739609.614875 rt=0.42 ms -> presse +3.12 ms
+write 1793739610.617379 rt=0.65 ms -> presse +1.62 ms
+write 1793739611.618367 rt=0.35 ms -> presse +1.63 ms
+write 1793739612.619424 rt=0.59 ms -> presse +1.58 ms
+write 1793739613.621118 rt=0.59 ms -> presse +2.88 ms
+write 1793739614.621972 rt=0.55 ms -> presse +3.03 ms
+write 1793739615.627570 rt=0.59 ms -> presse +1.43 ms
+clics envoyes=10 vus=10 | Mac->carte aller-retour min=0.35 med=0.59 max=0.65 ms | total min=1.41 med=1.78 max=3.12 ms | duree appui 59.0 a 62.0 ms

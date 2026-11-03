@@ -1,0 +1,51 @@
+write 1793739321.484057 rt=381 us
+write 1793739322.485446 rt=520 us
+write 1793739323.491020 rt=536 us
+write 1793739324.491917 rt=532 us
+write 1793739325.497130 rt=529 us
+write 1793739326.502135 rt=385 us
+write 1793739327.502888 rt=560 us
+write 1793739328.503710 rt=443 us
+write 1793739329.508386 rt=554 us
+write 1793739330.509945 rt=561 us
+debut etat=false
+1793739321.485 bouton gauche PRESSE
+1793739321.546 bouton gauche RELACHE
+1793739321.670 bouton gauche PRESSE
+1793739321.736 bouton gauche RELACHE
+1793739321.836 bouton gauche PRESSE
+1793739323.620 bouton gauche RELACHE
+1793739324.493 bouton gauche PRESSE
+1793739324.553 bouton gauche RELACHE
+1793739324.687 bouton gauche PRESSE
+1793739324.770 bouton gauche RELACHE
+1793739325.499 bouton gauche PRESSE
+1793739325.558 bouton gauche RELACHE
+1793739326.503 bouton gauche PRESSE
+1793739326.563 bouton gauche RELACHE
+1793739326.639 bouton gauche PRESSE
+1793739326.738 bouton gauche RELACHE
+1793739327.505 bouton gauche PRESSE
+1793739327.564 bouton gauche RELACHE
+1793739328.506 bouton gauche PRESSE
+1793739328.565 bouton gauche RELACHE
+1793739328.903 bouton gauche PRESSE
+1793739328.977 bouton gauche RELACHE
+1793739329.510 bouton gauche PRESSE
+1793739329.570 bouton gauche RELACHE
+1793739330.512 bouton gauche PRESSE
+1793739330.572 bouton gauche RELACHE
+1793739332.654 bouton gauche PRESSE
+1793739332.722 bouton gauche RELACHE
+fin transitions=28
+write 1793739321.484057 rt=0.38 ms -> presse +0.94 ms
+write 1793739322.485446 rt=0.52 ms -> aucun appui vu
+write 1793739323.491020 rt=0.54 ms -> aucun appui vu
+write 1793739324.491917 rt=0.53 ms -> presse +1.08 ms
+write 1793739325.497130 rt=0.53 ms -> presse +1.87 ms
+write 1793739326.502135 rt=0.39 ms -> presse +0.86 ms
+write 1793739327.502888 rt=0.56 ms -> presse +2.11 ms
+write 1793739328.503710 rt=0.44 ms -> presse +2.29 ms
+write 1793739329.508386 rt=0.55 ms -> presse +1.61 ms
+write 1793739330.509945 rt=0.56 ms -> presse +2.06 ms
+clics envoyes=10 vus=8 | Mac->carte aller-retour min=0.38 med=0.53 max=0.56 ms | total min=0.86 med=1.87 max=2.29 ms | duree appui 59.0 a 1784.0 ms

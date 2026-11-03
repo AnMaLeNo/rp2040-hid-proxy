@@ -1,64 +1,73 @@
-// Carte de controle : seconde RP2040-Zero reliee au Mac par son USB-C, qui
-// "appuie" sur les boutons RESET et BOOT de la carte proxy.
-//   GP13 -> GP2 du proxy (ligne "demande BOOTSEL" lue par le firmware proxy)
-//   GP14 -> patte utile du bouton RESET du proxy (signal RUN), optionnel
-//   GP15 -> patte utile du bouton BOOT du proxy (signal QSPI_SS), optionnel
-//   GND  -> GND du proxy
-// Chaque sortie est en collecteur ouvert : entree flottante au repos (le bouton
-// reste utilisable a la main), sortie a 0 pour "appuyer". Jamais de niveau haut
-// force, le proxy a ses propres resistances de tirage.
-// Commandes sur le port serie (115200, peu importe) :
-//   g = demande BOOTSEL par logiciel : GP2 du proxy tire a 0 pendant 4 s
-//   P / R / k = ligne a 0 / a 1 / impulsion 60 ms (clic injecte, variante proxy_souris_click ;
-//               sur cette variante g produit un clic de 2 s puis le BOOTSEL)
-//   r = reset simple (RUN bas 100 ms)
-//   b = passage en BOOTSEL par les boutons (BOOT bas, RUN bas 100 ms, BOOT relache 500 ms apres)
-//   ? = etat des lignes
+// Carte de controle (seconde RP2040-Zero), version HID vendeur sans port serie.
+// Cablage vers le proxy : GND <-> GND, GP13 -> GP2 du proxy (ligne clic / BOOTSEL),
+// facultatif GP14 -> patte RUN du bouton RESET, GP15 -> patte QSPI_SS du bouton BOOT.
+// Sorties en collecteur ouvert : entree flottante au repos, sortie a 0 pour "appuyer".
+//
+// Commandes : un rapport de sortie HID (SET_REPORT, endpoint de controle) dont le premier
+// octet est la commande, applique dans le callback, donc des la fin du transfert :
+//   P = ligne a 0 (clic presse)     R = ligne a 1 (relache)     k = impulsion 60 ms
+//   g = ligne a 0 pendant 4 s (BOOTSEL du proxy ; variante click : clic 2 s puis BOOTSEL)
+//   r = RUN a 0 pendant 100 ms      b = BOOT + RUN (BOOTSEL par les boutons)
+//   B = cette carte repasse en BOOTSEL      ? = rien (etat lu par GET_REPORT)
+// Rapport d'entree (GET_REPORT) : "REQ=x RUN=x BOOT=x".
+#include <string.h>
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "pico/bootrom.h"
+#include "tusb.h"
 
 #define PIN_REQ   13
 #define PIN_RUN   14
 #define PIN_BOOT  15
-#define PIN_LED   16   // WS2812 de la RP2040-Zero, non utilise ici
 
 static void press(uint pin)   { gpio_put(pin, 0); gpio_set_dir(pin, GPIO_OUT); }
 static void release(uint pin) { gpio_set_dir(pin, GPIO_IN); }
 
-int main(void) {
-  stdio_init_all();
-  for (uint p = PIN_REQ; p <= PIN_BOOT; p++) {
-    gpio_init(p);
-    gpio_disable_pulls(p);
-    release(p);
+static volatile uint32_t req_release_at, run_release_at, boot_release_at, bootsel_at;
+static volatile uint32_t last_cmd_us;
+static volatile uint8_t  last_cmd;
+
+static inline uint32_t now_ms(void) { return to_ms_since_boot(get_absolute_time()); }
+
+void tud_hid_set_report_cb(uint8_t itf, uint8_t report_id, hid_report_type_t type,
+                           uint8_t const* buf, uint16_t len) {
+  (void) itf; (void) report_id; (void) type;
+  if (len == 0) return;
+  uint8_t c = buf[0];
+  last_cmd = c; last_cmd_us = time_us_32();
+  uint32_t t = now_ms();
+  switch (c) {
+    case 'P': press(PIN_REQ); req_release_at = 0; break;
+    case 'R': release(PIN_REQ); req_release_at = 0; break;
+    case 'k': press(PIN_REQ); req_release_at = t + 60; break;
+    case 'g': press(PIN_REQ); req_release_at = t + 4000; break;
+    case 'r': press(PIN_RUN); run_release_at = t + 100; break;
+    case 'b': press(PIN_BOOT); press(PIN_RUN); run_release_at = t + 100; boot_release_at = t + 300; break;
+    case 'B': bootsel_at = t + 50; break;
+    default: break;
   }
+}
+
+uint16_t tud_hid_get_report_cb(uint8_t itf, uint8_t report_id, hid_report_type_t type,
+                               uint8_t* buf, uint16_t reqlen) {
+  (void) itf; (void) report_id; (void) type;
+  char s[32];
+  int n = snprintf(s, sizeof s, "REQ=%d RUN=%d BOOT=%d c=%c", gpio_get(PIN_REQ), gpio_get(PIN_RUN),
+                   gpio_get(PIN_BOOT), last_cmd ? last_cmd : '-');
+  if (n > reqlen) n = reqlen;
+  memcpy(buf, s, (size_t) n);
+  return (uint16_t) n;
+}
+
+int main(void) {
+  for (uint p = PIN_REQ; p <= PIN_BOOT; p++) { gpio_init(p); gpio_set_dir(p, GPIO_IN); gpio_disable_pulls(p); gpio_put(p, 0); }
+  tusb_init();
   while (true) {
-    int c = getchar_timeout_us(100000);
-    if (c == PICO_ERROR_TIMEOUT) continue;
-    if (c == 'g') {
-      press(PIN_REQ); sleep_ms(50);
-      int lvl = gpio_get(PIN_REQ);   // niveau reel de la ligne pendant l'appui (doit etre 0)
-      sleep_ms(3950); release(PIN_REQ);
-      printf("bootsel logiciel ok, ligne pendant l'appui=%d\r\n", lvl);
-    } else if (c == 'P') {          // clic par fil (variante proxy_souris_click) : appui
-      press(PIN_REQ); printf("ligne 0 (clic presse)\r\n");
-    } else if (c == 'R') {          // relache
-      release(PIN_REQ); printf("ligne 1 (clic relache)\r\n");
-    } else if (c == 'k') {          // clic complet 60 ms
-      press(PIN_REQ); sleep_ms(60); release(PIN_REQ); printf("clic 60 ms\r\n");
-    } else if (c == 'B') {          // la carte de controle elle-meme repasse en BOOTSEL
-      printf("carte de controle : BOOTSEL\r\n"); sleep_ms(50); reset_usb_boot(0, 0);
-    } else if (c == 'r') {
-      press(PIN_RUN); sleep_ms(100); release(PIN_RUN);
-      printf("reset ok\r\n");
-    } else if (c == 'b') {
-      press(PIN_BOOT); sleep_ms(20);
-      press(PIN_RUN); sleep_ms(100); release(PIN_RUN);
-      sleep_ms(500); release(PIN_BOOT);
-      printf("bootsel ok\r\n");
-    } else if (c == '?') {
-      printf("REQ=%d RUN=%d BOOT=%d\r\n", gpio_get(PIN_REQ), gpio_get(PIN_RUN), gpio_get(PIN_BOOT));
-    }
+    tud_task();
+    uint32_t t = now_ms();
+    if (req_release_at && (int32_t) (t - req_release_at) >= 0) { release(PIN_REQ); req_release_at = 0; }
+    if (run_release_at && (int32_t) (t - run_release_at) >= 0) { release(PIN_RUN); run_release_at = 0; }
+    if (boot_release_at && (int32_t) (t - boot_release_at) >= 0) { release(PIN_BOOT); boot_release_at = 0; }
+    if (bootsel_at && (int32_t) (t - bootsel_at) >= 0) reset_usb_boot(0, 0);
   }
 }

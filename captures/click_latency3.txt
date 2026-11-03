@@ -1,0 +1,23 @@
+write 1793739403.012159 rt=444 us
+write 1793739404.017644 rt=689 us
+write 1793739405.023127 rt=496 us
+write 1793739406.025614 rt=437 us
+write 1793739407.027119 rt=590 us
+write 1793739408.029519 rt=581 us
+write 1793739409.034952 rt=399 us
+write 1793739410.036203 rt=402 us
+write 1793739411.038661 rt=408 us
+write 1793739412.039782 rt=519 us
+debut etat=false
+fin transitions=0
+write 1793739403.012159 rt=0.44 ms -> aucun appui vu
+write 1793739404.017644 rt=0.69 ms -> aucun appui vu
+write 1793739405.023127 rt=0.50 ms -> aucun appui vu
+write 1793739406.025614 rt=0.44 ms -> aucun appui vu
+write 1793739407.027119 rt=0.59 ms -> aucun appui vu
+write 1793739408.029519 rt=0.58 ms -> aucun appui vu
+write 1793739409.034952 rt=0.40 ms -> aucun appui vu
+write 1793739410.036203 rt=0.40 ms -> aucun appui vu
+write 1793739411.038661 rt=0.41 ms -> aucun appui vu
+write 1793739412.039782 rt=0.52 ms -> aucun appui vu
+clics envoyes=10 vus=0 | Mac->carte aller-retour min=0.40 med=0.50 max=0.69 ms
