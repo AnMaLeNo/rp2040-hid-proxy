@@ -579,6 +579,11 @@ static void core1_main(void) {
   pio_cfg.pinout = PIO_USB_PINOUT_DMDP;
 #endif
   tuh_configure(1, TUH_CFGID_RPI_PIO_USB_CONFIGURATION, &pio_cfg);
+  // La souris doit parler le protocole « report » (rapports de 8 octets decrits par son descripteur), pas le protocole « boot » (4 octets) :
+  // par defaut l'hote TinyUSB met les interfaces boot en protocole boot a l'enumeration (hid_host.c : _hidh_default_protocol = BOOT). macOS envoie
+  // ensuite SET_PROTOCOL(report), que le proxy relaie a la souris ; Windows ne l'envoie jamais : la souris restait en boot, ses rapports de 4 octets
+  // etaient lus avec le descripteur de 8 octets et ignores (curseur immobile, boutons injectes sans effet).
+  tuh_hid_set_default_protocol(HID_PROTOCOL_REPORT);
   tuh_init(1);
   // Reprise : si une interface HID est vue mais que la copie des descripteurs ne
   // se termine pas en 3 s (echec d'une requete pendant l'enumeration, observe

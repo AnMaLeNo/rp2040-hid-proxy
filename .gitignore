@@ -1,2 +1,7 @@
 tools/button_watch
 .DS_Store
+build/
+build_out/
+Pico-PIO-USB/
+src/pico_sdk_import.cmake
+__pycache__/
