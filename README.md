@@ -117,3 +117,26 @@ Deux obstacles rencontres, dans l'ordre :
 - La G502 n'a que des interfaces HID : confirme par le descripteur de configuration copie (59 octets, 2 interfaces HID).
 - Le relais des commandes G HUB / HID++ est valide pour SET_REPORT (voir plus haut) ; GET_REPORT n'a pas ete observe dans les echanges de G HUB, son chemin corrige n'est donc pas encore exerce.
 - La latence n'a ete mesuree qu'avec l'horloge du proxy, en variante dev (voir plus haut).
+
+## Windows : la souris restait en protocole boot (2026-11-03, soir)
+
+Constat : branché à un PC Windows, le proxy était énuméré (G502 HERO 046d:c08b, souris HID « OK » dans le gestionnaire de périphériques) mais le curseur ne bougeait pas. Mesures (`tools/win_mouse_watch.py`, évènements Raw Input par appareil) : aucun déplacement reçu ; journal de la variante `_dev` : `last_len=0`, et dans `captures/g502_via_proxy_debug_log.txt` des transferts « on EP 81 with 4 bytes » alors que le descripteur de rapport annonce des rapports de **8 octets** (16 boutons, X et Y sur 16 bits, molette, panoramique).
+
+Cause : l'hôte TinyUSB met par défaut les interfaces de classe boot en protocole **boot** à l'énumération (`hid_host.c` : `_hidh_default_protocol = HID_PROTOCOL_BOOT`, appliqué dans `process_set_config`). La souris envoyait donc des rapports de 4 octets (boutons, X, Y, molette en 8 bits), lus avec le descripteur de 8 octets. macOS envoie ensuite lui-même `SET_PROTOCOL(report)`, que le proxy relaie à la souris : c'est pourquoi tout marchait sur le Mac. Windows ne l'envoie jamais.
+
+Correction (`src/main.c`, une ligne avant `tuh_init`) : `tuh_hid_set_default_protocol(HID_PROTOCOL_REPORT)`. Mesure après correction (Windows, 30 s, souris bougée à la main) : 124 rapports reçus dont 118 avec déplacement, `last_len=8` côté proxy ; clics injectés par la carte de contrôle vus par Windows (3 impulsions `k` sur 3 : appui 48 à 64 ms). Latence ajoutée mesurée par le proxy : 230 à 440 µs.
+`firmware/proxy_souris_click.uf2` et `proxy_souris_click_dev.uf2` sont recompilés avec ce correctif ; **les autres variantes ne le sont pas** (même défaut sous Windows : à recompiler au besoin).
+
+### Compiler (sans droits administrateur, testé sur le Mac, 2026-11-03)
+
+`cmake` et `ninja` (brew), toolchain `arm-gnu-toolchain-14.2.rel1-darwin-arm64-arm-none-eabi` (archive, extraite dans `~/pico/toolchain`), `pico-sdk` 2.1.1 (avec le sous-module `lib/tinyusb`), `Pico-PIO-USB` 0.7.3 cloné dans `./Pico-PIO-USB` + `git apply src/pico-pio-usb-sof-phase.patch`, `pico_sdk_import.cmake` copié de `pico-sdk/external/` dans `src/`. Puis :
+
+```
+PATH=$HOME/pico/toolchain/bin:$PATH cmake -S src -B build -G Ninja -DPICO_SDK_PATH=$HOME/pico/pico-sdk -DPICO_BOARD=waveshare_rp2040_zero -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+ninja -C build proxy_souris_click proxy_souris_click_dev      # les .uf2 sont dans build/
+```
+
+### Outils Windows (le proxy est branché au PC ; la carte de contrôle reste sur le Mac)
+
+- `tools/win_reflash.py <uf2> [--secs N] [--log f]` : reflashe le proxy (variante `_dev` : commande `B` sur le port série ; sinon `ctrl.sh g` en SSH sur le Mac : **sur la variante `click` cela envoie un clic de 2 s au PC avant le BOOTSEL**), copie le .uf2 sur `RPI-RP2`, capture le journal série.
+- `tools/win_mouse_watch.py [secondes] [--only c08b]` : évènements souris bruts par appareil (déplacements, changements de bouton horodatés).
