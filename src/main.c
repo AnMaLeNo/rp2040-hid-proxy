@@ -138,12 +138,34 @@ static void ws2812_put(uint32_t rgb) {
 // variantes, donc aussi la transparente. Le chien de garde (3 s) ramene au test
 // de demarrage si le firmware se fige.
 #define PIN_BOOTSEL_REQ   2
+#if defined(CTRL_CLICK)
+// Variante clic par fil : GP2 a 0 = clic gauche injecte des le front (la ligne est
+// lue a chaque tour de boucle du coeur 0), GP2 a 1 = relache. Si la ligne reste a 0
+// plus de 2 s, retour en BOOTSEL. Le clic ne paie donc aucun delai pour le BOOT.
+#define CTRL_BOOT_HOLD_MS 2000
+static void inject_set(bool pressed);
+static inline void check_bootsel_req(void) {
+  static bool low;
+  static uint32_t low_since;
+  bool now_low = !gpio_get(PIN_BOOTSEL_REQ);
+  if (now_low != low) {
+    low = now_low;
+    low_since = to_ms_since_boot(get_absolute_time());
+    DBG("GP2 front : %s\r\n", now_low ? "appui" : "relache");
+    inject_set(now_low);
+  } else if (low && to_ms_since_boot(get_absolute_time()) - low_since > CTRL_BOOT_HOLD_MS) {
+    DBG("GP2 a 0 depuis 2 s : retour en BOOTSEL\r\n");
+    reset_usb_boot(0, 0);
+  }
+}
+#else
 static inline void check_bootsel_req(void) {
   if (!gpio_get(PIN_BOOTSEL_REQ)) {
     DBG("GP2 a 0 : retour en BOOTSEL\r\n");
     reset_usb_boot(0, 0);
   }
 }
+#endif
 
 #define MAX_HID_ITF       CFG_TUD_HID
 #define MAX_STRINGS       8
@@ -163,6 +185,7 @@ typedef struct {
   uint8_t  btn_report_id;   // 0 = pas d'identifiant de rapport
   uint8_t  btn_byte;        // index dans le rapport tel que recu (ID compris)
   uint8_t  btn_mask;
+  uint8_t  btn_report_len; // longueur du rapport d'entree qui contient le bouton (ID compris)
   uint16_t last_len;
   uint8_t  last[REPORT_LEN];
   volatile bool pending;
@@ -300,7 +323,9 @@ static void find_button1(hid_itf_t* it) {
   uint8_t  report_id = 0;
   uint32_t bit_pos = 0;         // position dans le rapport d'entree courant
   uint8_t  cur_id = 0;
+  uint8_t  btn_id = 0;
   it->btn_found = false;
+  it->btn_report_len = 0;
   uint16_t i = 0;
   while (i < it->desc_len) {
     uint8_t item = it->desc[i++];
@@ -326,8 +351,11 @@ static void find_button1(hid_itf_t* it) {
           it->btn_byte = (uint8_t) (pos / 8);
           it->btn_mask = (uint8_t) (1u << (pos % 8));
           it->btn_found = true;
+          btn_id = cur_id;
         }
         bit_pos += (uint32_t) report_size * report_count;
+        if (it->btn_found && cur_id == btn_id)
+          it->btn_report_len = (uint8_t) ((bit_pos + 7) / 8 + (btn_id ? 1 : 0));
         break;
       case 0xA0: case 0xC0: break;                             // Collection, End
       default: break;
@@ -493,8 +521,8 @@ void tuh_hid_mount_cb(uint8_t daddr, uint8_t idx, uint8_t const* desc_report, ui
   it->present = true;
   g.daddr = daddr;
   led_color = LED_HID;
-  DBG("hid mount daddr=%u idx=%u itf=%u proto=%u desc_len=%u btn=%u/%u/%02x\r\n", daddr, idx, it->itf_num,
-      it->protocol, desc_len, it->btn_found, it->btn_byte, it->btn_mask);
+  DBG("hid mount daddr=%u idx=%u itf=%u proto=%u desc_len=%u btn=%u/%u/%02x len=%u\r\n", daddr, idx, it->itf_num,
+      it->protocol, desc_len, it->btn_found, it->btn_byte, it->btn_mask, it->btn_report_len);
   if (it->protocol == HID_ITF_PROTOCOL_MOUSE) g.mouse_itf = (int8_t) idx;
   if (idx + 1 > g.n_itf) g.n_itf = idx + 1;
   tuh_hid_receive_report(daddr, idx);
@@ -740,12 +768,21 @@ void tud_hid_report_complete_cb(uint8_t instance, uint8_t const* report, uint16_
 // Sans mouvement de souris il faut emettre nous-memes un rapport.
 static void inject_set(bool pressed) {
   inject_active = pressed;
+  DBG("inject_set %u : mouse_itf=%d last_len=%u mounted=%u\r\n", pressed, g.mouse_itf,
+      g.mouse_itf >= 0 ? g.itf[g.mouse_itf].last_len : 0, tud_mounted());
   if (g.mouse_itf < 0) return;
   hid_itf_t* it = &g.itf[g.mouse_itf];
-  if (it->last_len == 0) return;
+  // Rapport neutre (pas de rejeu du dernier deplacement) : tout a 0, sauf l'identifiant
+  // de rapport et l'octet des boutons repris du dernier rapport s'il existe, puis le bit
+  // injecte. Sans rapport recu depuis le demarrage, la longueur vient du descripteur.
+  bool have_last = it->last_len != 0 && (!it->btn_report_id || it->last[0] == it->btn_report_id);
+  uint16_t len = have_last ? it->last_len : it->btn_report_len;
+  if (len == 0 || len > REPORT_LEN) return;
   uint8_t rep[REPORT_LEN];
-  memcpy(rep, it->last, it->last_len);
-  if (inject_bit(it, rep, it->last_len, pressed)) send_to_pc((uint8_t) g.mouse_itf, rep, it->last_len);
+  memset(rep, 0, len);
+  if (it->btn_report_id) rep[0] = it->btn_report_id;
+  if (have_last && it->btn_byte < len) rep[it->btn_byte] = it->last[it->btn_byte];
+  if (inject_bit(it, rep, len, pressed)) send_to_pc((uint8_t) g.mouse_itf, rep, len);
 }
 
 static void poll_inject_button(void) {

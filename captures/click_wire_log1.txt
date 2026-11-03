@@ -1,0 +1,63 @@
+d=1 cfg=125 GP2=1
+[proxy] phase now=501 target=500 period=1000 pc_sof=1
+[proxy] t=8015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498[proxy] t=9015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=10015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=500 target=500 period=1000 pc_sof=1
+[proxy] t=11015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=12015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=13015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=497 target=500 period=1000 pc_sof=1
+[proxy] t=14015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=498 target=500 period=1000 pc_sof=1
+[proxy] t=15015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=497 target=500 period=1000 pc_sof=1
+[proxy] t=16015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=63 min=441 avg=447 p50<=450 p99<=500 max=453 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=497 target=623 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=0 last_len=8 mounted=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=0 last_len=8 mounted=1
+[proxy] t=17015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=228 min=320 avg=1066 p50<=1350 p99<=1350 max=1385 over3200=0 dropped=1 (us, souris->PC)
+[proxy] phase now=620 target=773 period=1000 pc_sof=1
+[proxy] t=18015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=622 min=170 avg=186 p50<=200 p99<=350 max=329 over3200=0 dropped=1 (us, souris->PC)
+[proxy] phase now=774 target=766 period=1000 pc_sof=1
+[proxy] GP2 front : appui
+[proxy] inject_set 1 : mouse_itf=0 last_len=8 mounted=1
+[proxy] t=19015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=0
+[proxy] lat n=410 min=173 avg=398 p50<=200 p99<=200 max=89189 over3200=1 dropped=1 (us, souris->PC)
+[proxy] phase now=765 target=865 period=1000 pc_sof=1
+[proxy] GP2 front : relache
+[proxy] inject_set 0 : mouse_itf=0 last_len=8 mounted=1
+[proxy] t=20015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=567 min=77 avg=101 p50<=100 p99<=1100 max=1084 over3200=0 dropped=1 (us, souris->PC)
+[proxy] phase now=864 target=816 period=1000 pc_sof=1
+[proxy] t=21015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=829 min=80 avg=130 p50<=150 p99<=150 max=137 over3200=0 dropped=1 (us, souris->PC)
+[proxy] phase now=816 target=781 period=1000 pc_sof=1
+[proxy] t=22015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=546 min=130 avg=165 p50<=200 p99<=200 max=171 over3200=0 dropped=1 (us, souris->PC)
+[proxy] phase now=779 target=764 period=1000 pc_sof=1
+[proxy] t=23015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=731 min=162 avg=183 p50<=200 p99<=200 max=335 over3200=0 dropped=1 (us, souris->PC)
+[proxy] phase now=763 target=756 period=1000 pc_sof=1
+[proxy] t=24015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=807 min=182 avg=191 p50<=200 p99<=200 max=336 over3200=0 dropped=1 (us, souris->PC)
+[proxy] phase now=754 target=752 period=1000 pc_sof=1
+[proxy] t=25015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=748 min=189 avg=195 p50<=200 p99<=200 max=201 over3200=0 dropped=1 (us, souris->PC)
+[proxy] phase now=753 target=750 period=1000 pc_sof=1
+[proxy] t=26015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=796 min=192 avg=197 p50<=200 p99<=250 max=202 over3200=0 dropped=1 (us, souris->PC)
+[proxy] phase now=747 target=749 period=1000 pc_sof=1
+[proxy] t=27015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=324 min=193 avg=198 p50<=200 p99<=250 max=260 over3200=0 dropped=1 (us, souris->PC)
+[proxy] phase now=747 target=748 period=1000 pc_sof=1
+[proxy] t=28015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=583 min=195 avg=199 p

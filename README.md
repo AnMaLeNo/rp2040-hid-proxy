@@ -82,6 +82,16 @@ Principe : le PC envoie un SOF par ms ; TinyUSB le signale par `tud_sof_cb` (coe
 
 Resultat (`captures/phase2.txt`, 45 s, ~30 000 rapports, variante dev) : latence ajoutee entre 196 et 205 us, moyenne 200 us, phase tenue a +/-4 us, 0 rapport perdu, quelques pics isoles jusqu'a 430 us. Avant asservissement (`captures/latence4.txt`) : 70 a 1050 us en glissement.
 
+## Variante clic par le fil (`proxy_souris_click`, 2026-11-03)
+
+Transparente (identite G502 pure, asservissement de phase) avec GP2 a double usage, lu a chaque tour de boucle du coeur 0 : front descendant = clic gauche injecte immediatement, front montant = relache, ligne maintenue a 0 plus de 2 s (`CTRL_BOOT_HOLD_MS`) = retour en BOOTSEL. Le clic ne paie donc aucun delai pour conserver le reflash autonome. `proxy_souris_click_dev` = la meme avec port serie et journal.
+
+Le rapport injecte est neutre (deplacements a 0, octet des boutons repris du dernier rapport recu, bit 1 force) ; sans rapport recu depuis le demarrage, sa longueur vient du descripteur (`btn_report_len`, calcule dans `find_button1`). Avant cette correction le clic etait perdu si la souris n'avait pas bouge depuis le flash.
+
+Carte de controle (`proxy_ctrl.uf2`) : `P` ligne a 0 (appui), `R` ligne a 1 (relache), `k` impulsion 60 ms, `g` 4 s a 0 (sur cette variante : clic de 2 s puis BOOTSEL), `B` la carte de controle elle-meme repasse en BOOTSEL (plus de bouton a presser pour la reflasher).
+
+Mesure (`tools/click_latency.py`, `captures/click_latency1.txt`, souris immobile depuis le demarrage) : 10 clics envoyes, 10 vus par macOS, appui 58 a 61 ms pour 60 ms demandes. Delai de `write('k')` sur le port serie de la carte de controle a l'evenement bouton macOS : 1,6 a 4,3 ms, mediane 2,2 ms. Ce delai inclut Mac -> carte de controle (USB CDC) et proxy -> macOS ; la part du proxy seul n'est pas mesuree separement (bornee par le prochain polling du PC, au plus 1 ms, calcul).
+
 ## Problemes ouverts
 
 - Au demarrage du proxy avec la souris deja branchee, il est arrive (2 fois sur ~8 demarrages) que la souris ne soit pas vue (`n_itf=0`, un `umount` sans montage HID) : TinyUSB ne relance jamais une enumeration echouee. Correctif (2026-11-02, soir) : si aucun appareil n'est monte 4 s apres le demarrage ou le dernier essai, `tuh_rhport_reset_bus(1, true/false)` force SE0 20 ms ; Pico-PIO-USB emet deconnexion puis connexion et l'enumeration repart. Le cas « interface vue mais copie non terminee en 3 s » redemarre la carte. Verifie sur 3 redemarrages consecutifs (souris vue a chaque fois, reset non declenche) ; le defaut d'origine n'a pas ete reproduit depuis, donc le correctif n'est pas encore prouve sur un cas reel.

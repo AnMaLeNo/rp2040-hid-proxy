@@ -1,0 +1,33 @@
+debut etat=false
+1793738889.592 bouton gauche PRESSE
+1793738889.653 bouton gauche RELACHE
+1793738890.595 bouton gauche PRESSE
+1793738890.655 bouton gauche RELACHE
+1793738891.598 bouton gauche PRESSE
+1793738891.658 bouton gauche RELACHE
+1793738892.599 bouton gauche PRESSE
+1793738892.659 bouton gauche RELACHE
+1793738893.604 bouton gauche PRESSE
+1793738893.662 bouton gauche RELACHE
+1793738894.604 bouton gauche PRESSE
+1793738894.662 bouton gauche RELACHE
+1793738895.607 bouton gauche PRESSE
+1793738895.667 bouton gauche RELACHE
+1793738896.611 bouton gauche PRESSE
+1793738896.671 bouton gauche RELACHE
+1793738897.616 bouton gauche PRESSE
+1793738897.676 bouton gauche RELACHE
+1793738898.620 bouton gauche PRESSE
+1793738898.679 bouton gauche RELACHE
+fin transitions=20
+write 1793738889.590156 -> presse +1.84 ms
+write 1793738890.593408 -> presse +1.59 ms
+write 1793738891.596327 -> presse +1.67 ms
+write 1793738892.596763 -> presse +2.24 ms
+write 1793738893.599698 -> presse +4.30 ms
+write 1793738894.599834 -> presse +4.17 ms
+write 1793738895.604934 -> presse +2.07 ms
+write 1793738896.608677 -> presse +2.32 ms
+write 1793738897.613773 -> presse +2.23 ms
+write 1793738898.618273 -> presse +1.73 ms
+clics envoyes=10 vus=10 delai min=1.59 med=2.23 max=4.30 ms duree appui min=58.0 max=61.0 ms

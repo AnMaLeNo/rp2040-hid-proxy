@@ -9,11 +9,14 @@
 // force, le proxy a ses propres resistances de tirage.
 // Commandes sur le port serie (115200, peu importe) :
 //   g = demande BOOTSEL par logiciel : GP2 du proxy tire a 0 pendant 4 s
+//   P / R / k = ligne a 0 / a 1 / impulsion 60 ms (clic injecte, variante proxy_souris_click ;
+//               sur cette variante g produit un clic de 2 s puis le BOOTSEL)
 //   r = reset simple (RUN bas 100 ms)
 //   b = passage en BOOTSEL par les boutons (BOOT bas, RUN bas 100 ms, BOOT relache 500 ms apres)
 //   ? = etat des lignes
 #include <stdio.h>
 #include "pico/stdlib.h"
+#include "pico/bootrom.h"
 
 #define PIN_REQ   13
 #define PIN_RUN   14
@@ -38,6 +41,14 @@ int main(void) {
       int lvl = gpio_get(PIN_REQ);   // niveau reel de la ligne pendant l'appui (doit etre 0)
       sleep_ms(3950); release(PIN_REQ);
       printf("bootsel logiciel ok, ligne pendant l'appui=%d\r\n", lvl);
+    } else if (c == 'P') {          // clic par fil (variante proxy_souris_click) : appui
+      press(PIN_REQ); printf("ligne 0 (clic presse)\r\n");
+    } else if (c == 'R') {          // relache
+      release(PIN_REQ); printf("ligne 1 (clic relache)\r\n");
+    } else if (c == 'k') {          // clic complet 60 ms
+      press(PIN_REQ); sleep_ms(60); release(PIN_REQ); printf("clic 60 ms\r\n");
+    } else if (c == 'B') {          // la carte de controle elle-meme repasse en BOOTSEL
+      printf("carte de controle : BOOTSEL\r\n"); sleep_ms(50); reset_usb_boot(0, 0);
     } else if (c == 'r') {
       press(PIN_RUN); sleep_ms(100); release(PIN_RUN);
       printf("reset ok\r\n");

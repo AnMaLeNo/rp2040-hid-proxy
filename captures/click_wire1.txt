@@ -1,0 +1,2 @@
+debut etat=false
+fin transitions=0
