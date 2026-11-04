@@ -1,0 +1,143 @@
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0f 10 04 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0f 1f 20 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0f 13 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0f 13 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0f 13 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0f 80 80 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0f 80 81 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0f 80 70 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0f 80 70 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0f 80 70 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 03 0f 00 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0f 80 71 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0f 81 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0f 81 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 00 0f 81 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 02 7f 00 00 00 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 02 8f 00 00 c8 fa
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 02 4f 00 01 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 02 0f 00 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 02 7f 00 00 00 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 02 8f 01 00 c8 fa
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 02 0f 00 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 02 ef 00 00 00 00
+[proxy] PC SET_REPORT itf=1 id=16 type=2 len=6 : ff 02 ef 01 00 00 00
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 02 3f 00 01 00 78
+[proxy] PC SET_REPORT itf=1 id=17 type=2 len=19 : ff 02 3f 01 01 00 78
+[proxy] t=2015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=499 target=500 period=1000 pc_sof=1
+[proxy] t=3015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=501 target=500 period=1000 pc_sof=1
+[proxy] t=4015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] phase now=501 target=500 period=1000 pc_sof=1
+[proxy] t=5015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=16 min=411 avg=421 p50<=450 p99<=450 max=432 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=507 target=500 period=999 pc_sof=1
+[proxy] t=6015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=801 min=401 avg=421 p50<=450 p99<=450 max=442 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=504 target=610 period=999 pc_sof=1
+[proxy] t=7015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=852 min=293 avg=319 p50<=350 p99<=450 max=431 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=610 target=669 period=1000 pc_sof=1
+[proxy] t=8015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=743 min=234 avg=254 p50<=300 p99<=300 max=324 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=662 target=696 period=1001 pc_sof=1
+[proxy] t=9015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=847 min=208 avg=226 p50<=250 p99<=250 max=266 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=694 target=709 period=1000 pc_sof=1
+[proxy] t=10015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=970 min=194 avg=212 p50<=250 p99<=250 max=240 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=715 target=715 period=999 pc_sof=1
+[proxy] t=11015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=990 min=185 avg=206 p50<=250 p99<=250 max=230 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=717 target=718 period=1000 pc_sof=1
+[proxy] t=12015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=909 min=187 avg=203 p50<=250 p99<=250 max=226 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=712 target=719 period=1001 pc_sof=1
+[proxy] t=13015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=989 min=183 avg=202 p50<=250 p99<=250 max=225 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=710 target=720 period=1001 pc_sof=1
+[proxy] t=14015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=997 min=175 avg=201 p50<=250 p99<=250 max=223 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=723 target=720 period=1000 pc_sof=1
+[proxy] t=15015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=1000 min=175 avg=201 p50<=250 p99<=250 max=224 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=715 target=720 period=1001 pc_sof=1
+[proxy] t=16015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=997 min=181 avg=201 p50<=250 p99<=250 max=225 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=712 target=720 period=1001 pc_sof=1
+[proxy] t=17015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=996 min=183 avg=201 p50<=250 p99<=250 max=224 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=725 target=720 period=999 pc_sof=1
+[proxy] t=18015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=996 min=179 avg=201 p50<=250 p99<=250 max=648 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=710 target=720 period=1001 pc_sof=1
+[proxy] t=19015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=988 min=176 avg=201 p50<=250 p99<=250 max=666 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=726 target=720 period=999 pc_sof=1
+[proxy] t=20015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=942 min=179 avg=202 p50<=250 p99<=250 max=664 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=725 target=721 period=999 pc_sof=1
+[proxy] t=21015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=930 min=181 avg=201 p50<=250 p99<=250 max=644 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=719 target=721 period=1000 pc_sof=1
+[proxy] t=22015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=898 min=179 avg=200 p50<=250 p99<=250 max=597 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=723 target=721 period=1000 pc_sof=1
+[proxy] t=23015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=994 min=181 avg=200 p50<=200 p99<=250 max=591 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=717 target=721 period=1001 pc_sof=1
+[proxy] t=24015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=751 min=180 avg=201 p50<=250 p99<=250 max=571 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=713 target=721 period=1001 pc_sof=1
+[proxy] t=25015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=999 min=177 avg=200 p50<=250 p99<=250 max=550 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=725 target=721 period=999 pc_sof=1
+[proxy] t=26015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=997 min=180 avg=200 p50<=250 p99<=250 max=516 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=725 target=721 period=999 pc_sof=1
+[proxy] t=27015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=998 min=180 avg=200 p50<=200 p99<=250 max=526 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=712 target=721 period=1001 pc_sof=1
+[proxy] t=28015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=964 min=176 avg=200 p50<=200 p99<=250 max=487 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=721 target=721 period=1000 pc_sof=1
+[proxy] t=29015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=952 min=179 avg=200 p50<=250 p99<=250 max=225 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=727 target=721 period=999 pc_sof=1
+[proxy] t=30015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=987 min=180 avg=200 p50<=200 p99<=250 max=225 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=717 target=721 period=1001 pc_sof=1
+[proxy] t=31015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=990 min=170 avg=200 p50<=200 p99<=250 max=426 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=716 target=721 period=1001 pc_sof=1
+[proxy] t=32015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=992 min=171 avg=200 p50<=250 p99<=250 max=455 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=712 target=721 period=1001 pc_sof=1
+[proxy] t=33015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=992 min=178 avg=200 p50<=250 p99<=250 max=226 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=717 target=721 period=1001 pc_sof=1
+[proxy] t=34015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=989 min=169 avg=231 p50<=250 p99<=1250 max=1215 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=713 target=736 period=1001 pc_sof=1
+[proxy] t=35015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=990 min=166 avg=186 p50<=200 p99<=250 max=411 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=749 target=729 period=999 pc_sof=1
+[proxy] t=36015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=973 min=156 avg=192 p50<=200 p99<=250 max=271 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=744 target=725 period=999 pc_sof=1
+[proxy] t=37015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=952 min=180 avg=196 p50<=200 p99<=250 max=289 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=727 target=723 period=999 pc_sof=1
+[proxy] t=38015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=900 min=172 avg=198 p50<=200 p99<=250 max=281 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=722 target=722 period=1000 pc_sof=1
+[proxy] t=39015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=924 min=173 avg=199 p50<=200 p99<=250 max=227 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=721 target=722 period=1000 pc_sof=1
+[proxy] t=40015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=943 min=183 avg=199 p50<=200 p99<=250 max=221 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=727 target=722 period=999 pc_sof=1
+[proxy] t=41015 ms led=002000 ready=1 n_itf=2 exposed=1 connected=1 mounted=1 cfg=125 GP2=1
+[proxy] lat n=938 min=175 avg=199 p50<=200 p99<=250 max=219 over3200=0 dropped=0 (us, souris->PC)
+[proxy] phase now=724 target=722 period=1000 pc_sof=1
