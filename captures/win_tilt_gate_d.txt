@@ -1,0 +1,26 @@
+# Test D (2026-11-04) : inclinaison NON relayee au PC ; clics de la carte de controle toujours filtres par l'inclinaison.
+cible prête (epoch 1793819414.659), 24 s, 8 envoi(s) de `k`
+envois de k : 8
+  1793819420.675 -> 1793819420.967  cmd k ok (372 us)
+  1793819422.477 -> 1793819422.797  cmd k ok (348 us)
+  1793819424.305 -> 1793819424.644  cmd k ok (349 us)
+  1793819426.147 -> 1793819426.474  cmd k ok (380 us)
+  1793819427.979 -> 1793819428.324  cmd k ok (371 us)
+  1793819429.828 -> 1793819430.046  cmd k ok (374 us)
+  1793819431.555 -> 1793819431.773  cmd k ok (363 us)
+  1793819433.284 -> 1793819433.623  cmd k ok (341 us)
+appuis reçus : 3  relâchements : 3
+  appui 1793819430.046
+  appui 1793819431.773
+  appui 1793819433.624
+inclinaisons vues : 0 évènements avec Maj, 0 molette au total
+
+observation des évènements souris bruts pendant 26 s (epoch de départ 1793819414.510)
+\\?\HID#VID_046D&PID_C08B&MI_00#8&3469391&0&0000#{378de44c-56ef-11d1-bc8c-00a0c91405dd}
+    rapports 292 · avec déplacement 199 (Σdx 42, Σdy 19) · changements de bouton 6
+  1793819430.0470  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793819430.1095  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793819431.7748  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793819431.8373  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793819433.6292  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793819433.6913  gauche relâché  [VID_046D&PID_C08B&MI_00]
