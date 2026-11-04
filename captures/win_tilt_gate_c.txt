@@ -1,0 +1,198 @@
+# Test C (2026-11-04) : clics de la carte de controle filtres par l'inclinaison de la molette. 20 k envoyes (toutes les ~1,5 s), 10 clics injectes.
+# Fenetre-cible (win_click_sink.py) :
+cible prête (epoch 1793818983.692), 32 s, 24 envoi(s) de `k`
+envois de k : 20
+  1793818987.706 -> 1793818987.972  cmd k ok (375 us)
+  1793818989.182 -> 1793818989.524  cmd k ok (366 us)
+  1793818990.740 -> 1793818990.989  cmd k ok (353 us)
+  1793818992.201 -> 1793818992.468  cmd k ok (353 us)
+  1793818993.681 -> 1793818993.945  cmd k ok (352 us)
+  1793818995.158 -> 1793818995.376  cmd k ok (354 us)
+  1793818996.590 -> 1793818996.938  cmd k ok (350 us)
+  1793818998.146 -> 1793818998.366  cmd k ok (374 us)
+  1793818999.567 -> 1793818999.810  cmd k ok (342 us)
+  1793819001.018 -> 1793819001.241  cmd k ok (376 us)
+  1793819002.446 -> 1793819002.661  cmd k ok (363 us)
+  1793819003.870 -> 1793819004.146  cmd k ok (394 us)
+  1793819005.349 -> 1793819005.563  cmd k ok (359 us)
+  1793819006.766 -> 1793819007.116  cmd k ok (364 us)
+  1793819008.319 -> 1793819008.573  cmd k ok (350 us)
+  1793819009.781 -> 1793819010.041  cmd k ok (357 us)
+  1793819011.256 -> 1793819011.479  cmd k ok (359 us)
+  1793819012.690 -> 1793819012.913  cmd k ok (394 us)
+  1793819014.123 -> 1793819014.471  cmd k ok (376 us)
+  1793819015.676 -> 1793819015.903  cmd k ok (373 us)
+appuis reçus : 10  relâchements : 10
+  appui 1793818993.946
+  appui 1793818995.377
+  appui 1793818998.367
+  appui 1793818999.810
+  appui 1793819001.242
+  appui 1793819005.564
+  appui 1793819007.116
+  appui 1793819010.041
+  appui 1793819011.479
+  appui 1793819012.913
+inclinaisons vues : 118 évènements avec Maj, 118 molette au total
+  première 1793818993.461, dernière 1793819013.082
+
+# Raw Input (win_mouse_watch.py --only c08b) : le dernier appui (14,343 -> 14,768, 424 ms) est un clic physique de l'utilisateur (la souris avait ete deplacee hors de la fenetre) :
+observation des évènements souris bruts pendant 34 s (epoch de départ 1793818983.536)
+\\?\HID#VID_046D&PID_C08B&MI_00#8&3469391&0&0000#{378de44c-56ef-11d1-bc8c-00a0c91405dd}
+    rapports 266 · avec déplacement 110 (Σdx -432, Σdy -145) · changements de bouton 22
+  1793818993.4613  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818993.5719  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818993.6658  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818993.7604  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818993.8702  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818993.9478  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793818993.9638  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818994.0119  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793818994.0599  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818994.1693  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818994.2638  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818994.3581  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818994.4692  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818994.5634  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818994.6572  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818994.7665  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818994.8594  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818994.9702  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818995.0647  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818995.1580  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818995.2685  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818995.3641  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818995.3796  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793818995.4414  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793818995.4574  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818995.5679  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818995.6618  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818995.7572  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793818997.6726  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818997.7838  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818997.8788  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818997.9730  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818998.0820  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818998.1765  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818998.2863  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818998.3659  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793818998.3812  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818998.4283  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793818998.4752  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818998.5850  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818998.6797  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818998.7752  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818998.8860  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818998.9814  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818999.0750  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818999.1856  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818999.2811  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818999.3768  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818999.4719  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818999.5831  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818999.6777  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818999.7870  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818999.8190  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793818999.8671  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793818999.8833  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793818999.9799  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819000.0739  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819000.1838  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819000.2771  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819000.3724  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819000.4828  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819000.5766  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819000.6865  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819000.7813  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819000.8758  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819000.9868  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819001.0790  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819001.1868  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819001.2491  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793819001.2807  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819001.3118  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793819001.3753  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819001.4859  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819001.5810  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819001.6742  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819001.7843  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819001.8792  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819001.9725  molette horizontale (inclinaison) +120  [VID_046D&PID_C08B&MI_00]
+  1793819004.2797  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819004.3893  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819004.4844  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819004.5799  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819004.6874  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819004.7819  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819004.8753  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819004.9864  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819005.0809  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819005.1753  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819005.2852  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819005.3797  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819005.4883  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819005.5678  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793819005.5834  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819005.6307  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793819005.6784  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819005.7870  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819005.8813  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819005.9766  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819006.0872  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819006.1822  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819006.2775  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819006.3876  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819006.4827  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819006.5776  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819006.6875  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819006.7819  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819006.8763  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819006.9862  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819007.0790  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819007.1255  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793819007.1718  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793819007.1873  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819007.2824  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819007.3764  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819009.7805  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819009.8761  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819009.9697  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819010.0476  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793819010.0796  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819010.0956  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793819010.1741  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819010.2674  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819010.3783  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819010.4725  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819010.5674  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819010.6788  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819010.7702  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819010.8785  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819010.9721  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819011.0823  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819011.1768  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819011.2718  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819011.3822  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819011.4763  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819011.4763  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793819011.5394  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793819011.5714  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819011.6676  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819011.7767  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819011.8723  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819011.9829  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819012.0774  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819012.1710  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819012.2805  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819012.3760  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819012.4706  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819012.5801  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819012.6745  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819012.7677  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819012.8777  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819012.9087  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793819012.9717  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819012.9717  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793819013.0823  molette horizontale (inclinaison) -120  [VID_046D&PID_C08B&MI_00]
+  1793819014.3435  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793819014.7678  gauche relâché  [VID_046D&PID_C08B&MI_00]

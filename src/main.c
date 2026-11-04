@@ -144,16 +144,35 @@ static void ws2812_put(uint32_t rgb) {
 // lue a chaque tour de boucle du coeur 0), GP2 a 1 = relache. Si la ligne reste a 0
 // plus de 2 s, retour en BOOTSEL. Le clic ne paie donc aucun delai pour le BOOT.
 #define CTRL_BOOT_HOLD_MS 2000
+// Le clic de la carte de controle n'est relaye que si l'un des deux boutons « d'inclinaison » de la molette est maintenu (decision de
+// l'utilisateur). La G502 les presente au PC comme un defilement horizontal (AC Pan, +1 a droite, -1 a gauche) qu'elle repete toutes les
+// ~100 ms (112 ms au plus, mesure Raw Input sous Windows) tant que la molette est inclinee : « maintenu » = un rapport avec un panoramique
+// non nul recu depuis moins de TILT_HOLD_US. Les clics de la vraie souris ne sont jamais filtres.
+#define TILT_HOLD_US 200000
+static volatile uint32_t tilt_last_us;   // ecrit par le coeur 1 (reception des rapports), lu par le coeur 0
+static volatile bool     tilt_seen;
+static inline bool tilt_held(void) {
+  return tilt_seen && (uint32_t) (time_us_32() - tilt_last_us) < TILT_HOLD_US;
+}
 static void inject_set(bool pressed);
 static inline void check_bootsel_req(void) {
   static bool low;
+  static bool clicking;   // un clic a effectivement ete injecte pour ce front descendant
   static uint32_t low_since;
   bool now_low = !gpio_get(PIN_BOOTSEL_REQ);
   if (now_low != low) {
     low = now_low;
     low_since = to_ms_since_boot(get_absolute_time());
-    DBG("GP2 front : %s\r\n", now_low ? "appui" : "relache");
-    inject_set(now_low);
+    if (now_low) {
+      // decision au front : si la molette n'est pas inclinee a cet instant, le clic est refuse en entier
+      clicking = tilt_held();
+      DBG("GP2 front : appui, molette inclinee=%u -> %s\r\n", clicking, clicking ? "clic injecte" : "clic refuse");
+      if (clicking) inject_set(true);
+    } else {
+      DBG("GP2 front : relache\r\n");
+      if (clicking) inject_set(false);
+      clicking = false;
+    }
   } else if (low && to_ms_since_boot(get_absolute_time()) - low_since > CTRL_BOOT_HOLD_MS) {
     DBG("GP2 a 0 depuis 2 s : retour en BOOTSEL\r\n");
     reset_usb_boot(0, 0);
@@ -187,6 +206,12 @@ typedef struct {
   uint8_t  btn_byte;        // index dans le rapport tel que recu (ID compris)
   uint8_t  btn_mask;
   uint8_t  btn_report_len; // longueur du rapport d'entree qui contient le bouton (ID compris)
+  // Position du champ « panoramique » (page Consumer, usage AC Pan 0x0238) : c'est l'inclinaison
+  // de la molette de la G502, repetee par la souris tant qu'elle est inclinee
+  bool     pan_found;
+  uint8_t  pan_report_id;
+  uint8_t  pan_byte;        // index dans le rapport tel que recu (ID compris)
+  uint8_t  pan_size;        // 1 ou 2 octets (champ entier signe, aligne sur un octet)
   uint16_t last_len;
   uint8_t  last[REPORT_LEN];
   volatile bool pending;
@@ -325,8 +350,12 @@ static void find_button1(hid_itf_t* it) {
   uint32_t bit_pos = 0;         // position dans le rapport d'entree courant
   uint8_t  cur_id = 0;
   uint8_t  btn_id = 0;
+  uint16_t usages[8];           // items Usage (locaux) du prochain champ Input, avec leur page
+  uint16_t usage_pages[8];
+  uint8_t  n_usages = 0;
   it->btn_found = false;
   it->btn_report_len = 0;
+  it->pan_found = false;
   uint16_t i = 0;
   while (i < it->desc_len) {
     uint8_t item = it->desc[i++];
@@ -338,6 +367,13 @@ static void find_button1(hid_itf_t* it) {
     i += size;
     switch (item & 0xFC) {
       case 0x04: usage_page = (uint16_t) data; break;          // Usage Page
+      case 0x08:                                               // Usage (4 octets : la page est dans les 16 bits hauts)
+        if (n_usages < 8) {
+          usages[n_usages] = (uint16_t) data;
+          usage_pages[n_usages] = size == 4 ? (uint16_t) (data >> 16) : usage_page;
+          n_usages++;
+        }
+        break;
       case 0x18: usage_min = (uint16_t) data; break;           // Usage Minimum
       case 0x74: report_size = (uint16_t) data; break;         // Report Size
       case 0x94: report_count = (uint16_t) data; break;        // Report Count
@@ -354,6 +390,16 @@ static void find_button1(hid_itf_t* it) {
           it->btn_found = true;
           btn_id = cur_id;
         }
+        if (!it->pan_found && !(data & 1) && (report_size == 8 || report_size == 16)) {
+          for (uint8_t u = 0; u < n_usages && u < report_count; u++) {
+            if (usage_pages[u] != 0x0C || usages[u] != 0x0238) continue;
+            uint32_t pos = bit_pos + (uint32_t) u * report_size + (report_id ? 8 : 0);
+            it->pan_report_id = report_id;
+            it->pan_byte = (uint8_t) (pos / 8);
+            it->pan_size = (uint8_t) (report_size / 8);
+            it->pan_found = true;
+          }
+        }
         bit_pos += (uint32_t) report_size * report_count;
         if (it->btn_found && cur_id == btn_id)
           it->btn_report_len = (uint8_t) ((bit_pos + 7) / 8 + (btn_id ? 1 : 0));
@@ -363,6 +409,8 @@ static void find_button1(hid_itf_t* it) {
     }
     // Usage Minimum est un item local, remis a zero apres chaque main item
     if ((item & 0xFC) == 0x80 || (item & 0xFC) == 0x90 || (item & 0xFC) == 0xB0) usage_min = 0;
+    // Les Usage sont des items locaux : remis a zero apres chaque item principal, collections comprises
+    if ((item & 0xFC) == 0x80 || (item & 0xFC) == 0x90 || (item & 0xFC) == 0xB0 || (item & 0xFC) == 0xA0) n_usages = 0;
   }
 }
 
@@ -523,8 +571,8 @@ void tuh_hid_mount_cb(uint8_t daddr, uint8_t idx, uint8_t const* desc_report, ui
   it->present = true;
   g.daddr = daddr;
   led_color = LED_HID;
-  DBG("hid mount daddr=%u idx=%u itf=%u proto=%u desc_len=%u btn=%u/%u/%02x len=%u\r\n", daddr, idx, it->itf_num,
-      it->protocol, desc_len, it->btn_found, it->btn_byte, it->btn_mask, it->btn_report_len);
+  DBG("hid mount daddr=%u idx=%u itf=%u proto=%u desc_len=%u btn=%u/%u/%02x len=%u pan=%u/%u/%u\r\n", daddr, idx, it->itf_num,
+      it->protocol, desc_len, it->btn_found, it->btn_byte, it->btn_mask, it->btn_report_len, it->pan_found, it->pan_byte, it->pan_size);
   if (it->protocol == HID_ITF_PROTOCOL_MOUSE) g.mouse_itf = (int8_t) idx;
   if (idx + 1 > g.n_itf) g.n_itf = idx + 1;
   tuh_hid_receive_report(daddr, idx);
@@ -561,6 +609,18 @@ void tuh_hid_report_received_cb(uint8_t daddr, uint8_t idx, uint8_t const* repor
   memcpy(it->last, report, len);
   it->last_len = len;
   tuh_hid_receive_report(daddr, idx);
+
+#if defined(CTRL_CLICK)
+  // Inclinaison de la molette : panoramique non nul dans ce rapport (l'ID de rapport, s'il y en a un, doit correspondre)
+  if ((int8_t) idx == g.mouse_itf && it->pan_found && len >= (uint16_t) (it->pan_byte + it->pan_size) &&
+      (!it->pan_report_id || it->last[0] == it->pan_report_id)) {
+    bool tilt = it->last[it->pan_byte] != 0 || (it->pan_size == 2 && it->last[it->pan_byte + 1] != 0);
+    if (tilt) {
+      tilt_last_us = it->t_rx;
+      tilt_seen = true;
+    }
+  }
+#endif
 
   uint8_t mod[REPORT_LEN];
   if (inject_active && (int8_t) idx == g.mouse_itf) {

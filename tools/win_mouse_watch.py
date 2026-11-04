@@ -79,6 +79,15 @@ def on_input(lparam):
         if m.usButtonFlags & bit and bit != 0x400:
             st["buttons"] += 1
             log.append((time.time(), name, label))
+    # molette verticale (0x400) et horizontale / panoramique (0x800) : la valeur signée est dans usButtonData ; tout autre drapeau est signalé
+    if m.usButtonFlags & 0x400:
+        log.append((time.time(), name, f"molette verticale {ctypes.c_short(m.usButtonData).value:+d}"))
+    if m.usButtonFlags & 0x800:
+        log.append((time.time(), name, f"molette horizontale (inclinaison) {ctypes.c_short(m.usButtonData).value:+d}"))
+    if m.usButtonFlags & ~0xFFF:
+        log.append((time.time(), name, f"drapeaux inconnus 0x{m.usButtonFlags:04x}"))
+    if m.ulRawButtons and not m.usButtonFlags:
+        log.append((time.time(), name, f"ulRawButtons 0x{m.ulRawButtons:08x}"))
 
 
 @WNDPROC
@@ -93,6 +102,7 @@ def wndproc(hwnd, msg, wparam, lparam):
 
 
 def main():
+    sys.stdout.reconfigure(encoding="utf-8")     # sortie redirigée : sinon cp1252 ne sait pas écrire « Σ »
     secs = float(next((a for a in sys.argv[1:] if not a.startswith("-")), 10))
     only = sys.argv[sys.argv.index("--only") + 1].lower() if "--only" in sys.argv else ""
     wc = WNDCLASSW()
