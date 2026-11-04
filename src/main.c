@@ -610,21 +610,28 @@ void tuh_hid_report_received_cb(uint8_t daddr, uint8_t idx, uint8_t const* repor
   it->last_len = len;
   tuh_hid_receive_report(daddr, idx);
 
+  uint8_t mod[REPORT_LEN];
+  bool    modified = false;
 #if defined(CTRL_CLICK)
-  // Inclinaison de la molette : panoramique non nul dans ce rapport (l'ID de rapport, s'il y en a un, doit correspondre)
+  // Inclinaison de la molette : panoramique non nul dans ce rapport (l'ID de rapport, s'il y en a un, doit correspondre).
+  // Elle sert de « clef » au clic de la carte de contrôle (voir check_bootsel_req) et n'est PAS relayee au PC : le champ est remis a 0
+  // dans la copie envoyee (deplacements, boutons et molette verticale restent tels quels).
   if ((int8_t) idx == g.mouse_itf && it->pan_found && len >= (uint16_t) (it->pan_byte + it->pan_size) &&
       (!it->pan_report_id || it->last[0] == it->pan_report_id)) {
     bool tilt = it->last[it->pan_byte] != 0 || (it->pan_size == 2 && it->last[it->pan_byte + 1] != 0);
     if (tilt) {
       tilt_last_us = it->t_rx;
       tilt_seen = true;
+      memcpy(mod, it->last, len);
+      memset(&mod[it->pan_byte], 0, it->pan_size);
+      report = mod;
+      modified = true;
     }
   }
 #endif
 
-  uint8_t mod[REPORT_LEN];
   if (inject_active && (int8_t) idx == g.mouse_itf) {
-    memcpy(mod, report, len);
+    if (!modified) memcpy(mod, report, len);
     if (inject_bit(it, mod, len, true)) report = mod;
   }
   send_to_pc(idx, report, len);
