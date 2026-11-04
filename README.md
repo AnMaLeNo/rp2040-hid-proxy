@@ -148,6 +148,24 @@ Mesures (Windows, `tools/win_click_sink.py` + `win_mouse_watch.py`, `captures/wi
 - **Latence ajoutée par le proxy** (statistique `lat` de la variante `_dev`, réception du rapport par le proxy → lecture par le PC, souris bougée en continu, ~1000 rapports/s, régime établi après convergence de l'asservissement de phase) : avant les modifications `captures/latence_ancien_dev.txt` (firmware de la PR #1) : 26 969 rapports, moyenne **200,4 µs** ; après (filtre + inclinaison non relayée) `captures/latence_nouveau_dev.txt` : 28 532 rapports, moyenne **200,2 µs**. Aucune différence mesurable. Les maxima par seconde varient d'une mesure à l'autre (un pic isolé à 1215 µs dans l'ancienne, 509 µs au plus dans la nouvelle : c'est la gigue de l'ordonnancement USB, pas un effet du code). Limite : rien n'établit que l'utilisateur ait incliné la molette pendant la mesure du nouveau firmware ; le coût par rapport avec inclinaison (une copie d'au plus 8 octets) n'a donc pas été isolé.
 - Non mesuré : l'instant précis de refus après le relâchement de la molette (borne : 200 ms par construction). Le profil embarqué de la souris peut être changé avec G HUB : si l'inclinaison est un jour assignée à un bouton, ce filtre ne la verrait plus (l'octet 7 resterait à 0).
 
+## Clic maintenu : durée de l'impulsion `k` réglable (carte de contrôle, 2026-11-04)
+
+Besoin : le logiciel de B veut pouvoir **maintenir** le clic tant que la cible est sous le réticule (armes automatiques du jeu). La carte de contrôle n'avait qu'une impulsion fixe de 60 ms ; renvoyer `k` toutes les 30 ms pour la prolonger avait, mesuré sur le Mac (hidapi, `tools` de aimlabs-pipeline), des écarts jusqu'à 81 ms entre deux envois : au-dessus de 60 ms la carte relâche entre deux (micro-relâchement visible du jeu).
+
+Firmware `src/ctrl/main.c` (rapport `proxy_ctrl.uf2` recompilé) : **`k` accepte un second octet n** : impulsion de n × 10 ms, au plus 1,5 s (n > 150 est ramené à 150) ; sans octet (ou n = 0) : 60 ms comme avant. Un `k` reçu pendant une impulsion **repousse** le relâchement. Le maintien utilise n = 15 (150 ms) renvoyé toutes les 30 ms : 120 ms de tolérance, et la carte relâche d'elle-même au plus 150 ms après le dernier `k` si l'ordinateur se tait ou plante (homme mort : jamais de ligne laissée à 0, donc jamais de BOOTSEL du proxy par accident). Une carte à l'ancien firmware ignore l'octet (60 ms) : le maintien marche alors avec la marge d'avant.
+
+Côté Mac (aimlabs-pipeline, `aimpipe/ctrl_fire.py`) : plafond d'un appui continu 1,2 s (réglable de 200 ms à 1600 ms, **jamais plus : GP2 à 0 plus de 2 s fait passer le proxy en BOOTSEL**), puis `R`, 30 ms de pause et nouvel appui.
+
+Mesure sur le matériel (`captures/win_hold_test.txt` : Mac → carte → proxy → Windows, molette de la souris inclinée pour ouvrir le filtre, journal série du proxy en témoin) :
+
+| Demandé (Mac) | Vu par Windows (Raw Input) |
+|---|---|
+| appui maintenu 3 s, plafond 1,2 s | 1,231 s · pause 32 ms · 1,214 s · pause 47 ms · 0,470 s (2,99 s au total) |
+| appui maintenu 0,5 s | 0,507 s |
+| clic simple (mode un clic) | 0,062 s |
+
+Les 5 fronts descendants de GP2 vus par le proxy portent tous « molette inclinée = 1 → clic injecté » : le filtre est réévalué à chaque ré-appui (si la molette est relâchée, le maintien s'arrête au plafond suivant au plus tard). Aucun appui continu au-delà de 1,23 s.
+
 ### Compiler (sans droits administrateur, testé sur le Mac, 2026-11-03)
 
 `cmake` et `ninja` (brew), toolchain `arm-gnu-toolchain-14.2.rel1-darwin-arm64-arm-none-eabi` (archive, extraite dans `~/pico/toolchain`), `pico-sdk` 2.1.1 (avec le sous-module `lib/tinyusb`), `Pico-PIO-USB` 0.7.3 cloné dans `./Pico-PIO-USB` + `git apply src/pico-pio-usb-sof-phase.patch`, `pico_sdk_import.cmake` copié de `pico-sdk/external/` dans `src/`. Puis :

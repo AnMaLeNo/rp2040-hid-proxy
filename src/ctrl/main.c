@@ -6,6 +6,9 @@
 // Commandes : un rapport de sortie HID (SET_REPORT, endpoint de controle) dont le premier
 // octet est la commande, applique dans le callback, donc des la fin du transfert :
 //   P = ligne a 0 (clic presse)     R = ligne a 1 (relache)     k = impulsion 60 ms
+//   k + octet n (n > 0) = impulsion de n x 10 ms, au plus 1,5 s (GP2 a 0 plus de 2 s = BOOTSEL du proxy). Un k pendant une impulsion
+//   REPOUSSE le relachement : renvoyer k toutes les ~30 ms avec n = 15 maintient l'appui, et la carte relache d'elle-meme 150 ms apres le
+//   dernier k si l'ordinateur se tait ou plante (homme mort). Sans octet n (ou n = 0) : 60 ms, comme avant.
 //   g = ligne a 0 pendant 4 s (BOOTSEL du proxy ; variante click : clic 2 s puis BOOTSEL)
 //   r = RUN a 0 pendant 100 ms      b = BOOT + RUN (BOOTSEL par les boutons)
 //   B = cette carte repasse en BOOTSEL      ? = rien (etat lu par GET_REPORT)
@@ -39,7 +42,11 @@ void tud_hid_set_report_cb(uint8_t itf, uint8_t report_id, hid_report_type_t typ
   switch (c) {
     case 'P': press(PIN_REQ); req_release_at = 0; break;
     case 'R': release(PIN_REQ); req_release_at = 0; break;
-    case 'k': press(PIN_REQ); req_release_at = t + 60; break;
+    case 'k': {
+      uint32_t ms = (len > 1 && buf[1] > 0) ? (buf[1] > 150 ? 1500u : (uint32_t) buf[1] * 10u) : 60u;
+      press(PIN_REQ); req_release_at = t + ms;
+      break;
+    }
     case 'g': press(PIN_REQ); req_release_at = t + 4000; break;
     case 'r': press(PIN_RUN); run_release_at = t + 100; break;
     case 'b': press(PIN_BOOT); press(PIN_RUN); run_release_at = t + 100; boot_release_at = t + 300; break;

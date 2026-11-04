@@ -1,0 +1,34 @@
+# Tir maintenu sur le vrai materiel (2026-11-04) : Mac -> CtrlFire (hold_mode) -> carte de controle (k + duree 150 ms, renvoye toutes les 30 ms) -> proxy -> Windows
+# Mac (tools/ctrl_hold_test.py, horloge du Mac) :
+attente 4 s…
+1793826446.980 appui maintenu demandé 3 s (plafond 1200 ms) ; relâché à 1793826449.985
+1793826450.993 appui maintenu demandé 0,5 s ; relâché à 1793826451.496
+1793826452.498 clic simple
+compteurs {'fires': 3, 'sent': 3, 'late': 0, 'errors': 0, 'cancelled': 0, 'too_soon': 0, 'holds': 2, 'hold_cycles': 2}
+
+# Windows (Raw Input, horloge du PC ; les deux horloges different de ~6,8 s) :
+observation des évènements souris bruts pendant 22 s (epoch de départ 1793826444.612)
+\\?\HID#VID_046D&PID_C08B&MI_00#8&3469391&0&0000#{378de44c-56ef-11d1-bc8c-00a0c91405dd}
+    rapports 407 · avec déplacement 263 (Σdx -30, Σdy -33) · changements de bouton 10
+  1793826453.8147  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793826455.0462  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793826455.0783  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793826456.2922  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793826456.3392  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793826456.8094  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793826457.8171  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793826458.3236  gauche relâché  [VID_046D&PID_C08B&MI_00]
+  1793826459.3336  gauche enfoncé  [VID_046D&PID_C08B&MI_00]
+  1793826459.3956  gauche relâché  [VID_046D&PID_C08B&MI_00]
+
+# Journal du proxy (variante dev) : fronts de GP2 et decision du filtre molette :
+[proxy] GP2 front : appui, molette inclinee=1 -> clic injecte
+[proxy] GP2 front : relache
+[proxy] GP2 front : appui, molette inclinee=1 -> clic injecte
+[proxy] GP2 front : relache
+[proxy] GP2 front : appui, molette inclinee=1 -> clic injecte
+[proxy] GP2 front : relache
+[proxy] GP2 front : appui, molette inclinee=1 -> clic injecte
+[proxy] GP2 front : relache
+[proxy] GP2 front : appui, molette inclinee=1 -> clic injecte
+[proxy] GP2 front : relache
