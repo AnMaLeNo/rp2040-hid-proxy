@@ -151,6 +151,7 @@ static void ws2812_put(uint32_t rgb) {
 #define TILT_HOLD_US 200000
 static volatile uint32_t tilt_last_us;   // ecrit par le coeur 1 (reception des rapports), lu par le coeur 0
 static volatile bool     tilt_seen;
+static volatile uint32_t tilt_count;     // rapports de la souris avec inclinaison depuis le demarrage (diagnostic : affiche par le battement de la variante dev)
 static inline bool tilt_held(void) {
   return tilt_seen && (uint32_t) (time_us_32() - tilt_last_us) < TILT_HOLD_US;
 }
@@ -622,6 +623,7 @@ void tuh_hid_report_received_cb(uint8_t daddr, uint8_t idx, uint8_t const* repor
     if (tilt) {
       tilt_last_us = it->t_rx;
       tilt_seen = true;
+      tilt_count++;
       memcpy(mod, it->last, len);
       memset(&mod[it->pan_byte], 0, it->pan_size);
       report = mod;
@@ -1019,8 +1021,13 @@ int main(void) {
     uint32_t now = to_ms_since_boot(get_absolute_time());
     if (now >= next_beat) {
       next_beat = now + 1000;
-      DBG("t=%lu ms led=%06lx ready=%u n_itf=%u exposed=%u connected=%u mounted=%u cfg=%u GP2=%u\r\n", (unsigned long) now,
-          (unsigned long) led_color, g.ready, g.n_itf, exposed, tud_connected(), tud_mounted(), dev_cfg_len, gpio_get(PIN_BOOTSEL_REQ));
+#if defined(CTRL_CLICK)
+      unsigned long tilts = (unsigned long) tilt_count;
+#else
+      unsigned long tilts = 0;
+#endif
+      DBG("t=%lu ms led=%06lx ready=%u n_itf=%u exposed=%u connected=%u mounted=%u cfg=%u GP2=%u tilt=%lu\r\n", (unsigned long) now,
+          (unsigned long) led_color, g.ready, g.n_itf, exposed, tud_connected(), tud_mounted(), dev_cfg_len, gpio_get(PIN_BOOTSEL_REQ), tilts);
       if (lat.n) {
         DBG("lat n=%lu min=%lu avg=%lu p50<=%lu p99<=%lu max=%lu over3200=%lu dropped=%lu (us, souris->PC)\r\n",
             (unsigned long) lat.n, (unsigned long) lat.min, (unsigned long) (lat.sum / lat.n),
