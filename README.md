@@ -127,6 +127,25 @@ Cause : l'hôte TinyUSB met par défaut les interfaces de classe boot en protoco
 Correction (`src/main.c`, une ligne avant `tuh_init`) : `tuh_hid_set_default_protocol(HID_PROTOCOL_REPORT)`. Mesure après correction (Windows, 30 s, souris bougée à la main) : 124 rapports reçus dont 118 avec déplacement, `last_len=8` côté proxy ; clics injectés par la carte de contrôle vus par Windows (3 impulsions `k` sur 3 : appui 48 à 64 ms). Latence ajoutée mesurée par le proxy : 230 à 440 µs.
 `firmware/proxy_souris_click.uf2` et `proxy_souris_click_dev.uf2` sont recompilés avec ce correctif ; **les autres variantes ne le sont pas** (même défaut sous Windows : à recompiler au besoin).
 
+## Clic filtré par la molette (variantes `click` et `click_dev`, 2026-11-04)
+
+Demande : le clic envoyé par la carte de contrôle ne doit être relayé au PC que **tant que l'un des deux boutons d'inclinaison de la molette (G502 HERO) est maintenu**. Les clics de la vraie souris passent toujours, sans condition.
+
+Fait établi (`tools/win_mouse_watch.py`, Raw Input sous Windows) : l'inclinaison n'est **pas un bouton** pour le PC mais un défilement horizontal (`WM_MOUSEHWHEEL` ±120) que la souris **répète toutes les ~100 ms** (95 à 112 ms mesurés) tant que la molette reste inclinée. Dans le descripteur de rapport de l'interface souris (rapport de 8 octets, sans identifiant) c'est le champ *AC Pan* (page Consumer, usage 0x0238) : **octet 7**, entier signé 8 bits, gauche = −1, droite = +1. Boutons 0–1, X 2–3, Y 4–5, molette 6.
+
+Mise en œuvre (`src/main.c`) :
+- `find_button1` repère aussi le champ AC Pan (`pan_found`, `pan_byte`, `pan_size`) à partir du descripteur ; testé hors carte sur le descripteur de la G502 (octet 7, taille 1) et sans régression sur les boutons.
+- Coeur 1, à chaque rapport reçu de la souris : si le champ Pan est non nul, l'instant est mémorisé (`tilt_last_us`). La molette est « maintenue » si ce dernier évènement a moins de `TILT_HOLD_US` = 200 ms (les répétitions sont espacées de 112 ms au plus). Le relâchement est donc détecté en moins de 200 ms.
+- Coeur 0, au front descendant de GP2 : si la molette est maintenue à cet instant le clic est injecté comme avant, sinon il est **refusé en entier** (aucun appui, aucun rapport). Au front montant, le relâchement n'est émis que si un appui a été injecté. Un clic déjà commencé va jusqu'au bout même si la molette est relâchée entre-temps.
+- Les rapports de défilement horizontal continuent d'être relayés tels quels au PC (la page web ou le jeu les reçoit comme avant).
+- Inchangés : le retour en BOOTSEL (GP2 à 0 plus de 2 s) et les commandes `P` / `R` du port série de la variante `_dev` (injection non filtrée, pour les essais). **Conséquence utile : `ctrl.sh g` (reflash) n'envoie plus de clic de 2 s au PC tant que la molette n'est pas inclinée.**
+
+Mesures (Windows, `tools/win_click_sink.py` + `win_mouse_watch.py`, `captures/win_tilt_gate_c.txt`) :
+- sans inclinaison : 5 `k` sur 5 refusés (0 clic) ;
+- inclinaison à gauche, puis à droite, puis à gauche (2 à 4 s chacune) avec un `k` toutes les ~1,5 s : 20 `k` envoyés, 10 clics injectés, **tous pendant une inclinaison** (dernier évènement d'inclinaison 0 à 80 ms avant l'appui, appui de 46 à 64 ms) ; 9 `k` (avant la première inclinaison, entre deux inclinaisons, après la dernière) n'ont produit aucun appui. Gauche et droite se comportent pareil.
+- un onzième appui visible par Windows (424 ms, avec déplacements de la souris) est un clic physique de l'utilisateur : il passe, comme prévu. Le 20e `k` (envoyé 1,3 s après la dernière inclinaison) est parti pendant ce clic : son résultat propre n'est pas démontrable (son impulsion de 60 ms se serait confondue avec l'appui physique).
+- Non mesuré : l'instant précis de refus après le relâchement de la molette (borne : 200 ms par construction). Le profil embarqué de la souris peut être changé avec G HUB : si l'inclinaison est un jour assignée à un bouton, ce filtre ne la verrait plus (l'octet 7 resterait à 0).
+
 ### Compiler (sans droits administrateur, testé sur le Mac, 2026-11-03)
 
 `cmake` et `ninja` (brew), toolchain `arm-gnu-toolchain-14.2.rel1-darwin-arm64-arm-none-eabi` (archive, extraite dans `~/pico/toolchain`), `pico-sdk` 2.1.1 (avec le sous-module `lib/tinyusb`), `Pico-PIO-USB` 0.7.3 cloné dans `./Pico-PIO-USB` + `git apply src/pico-pio-usb-sof-phase.patch`, `pico_sdk_import.cmake` copié de `pico-sdk/external/` dans `src/`. Puis :
@@ -138,5 +157,6 @@ ninja -C build proxy_souris_click proxy_souris_click_dev      # les .uf2 sont da
 
 ### Outils Windows (le proxy est branché au PC ; la carte de contrôle reste sur le Mac)
 
-- `tools/win_reflash.py <uf2> [--secs N] [--log f]` : reflashe le proxy (variante `_dev` : commande `B` sur le port série ; sinon `ctrl.sh g` en SSH sur le Mac : **sur la variante `click` cela envoie un clic de 2 s au PC avant le BOOTSEL**), copie le .uf2 sur `RPI-RP2`, capture le journal série.
-- `tools/win_mouse_watch.py [secondes] [--only c08b]` : évènements souris bruts par appareil (déplacements, changements de bouton horodatés).
+- `tools/win_reflash.py <uf2> [--secs N] [--log f]` : reflashe le proxy (variante `_dev` : commande `B` sur le port série ; sinon `ctrl.sh g` en SSH sur le Mac : **sur une variante `click` d'avant le 2026-11-04 cela envoie un clic de 2 s au PC avant le BOOTSEL ; depuis le filtre par la molette, plus de clic sauf molette inclinée**), copie le .uf2 sur `RPI-RP2`, capture le journal série.
+- `tools/win_mouse_watch.py [secondes] [--only c08b]` : évènements souris bruts par appareil (déplacements, changements de bouton, molette verticale et inclinaison horodatés).
+- `tools/win_click_sink.py [secondes] [--send N] [--gap s] [--first s]` : fenêtre-cible au centre de l'écran qui absorbe les clics du proxy pendant un test (aucun clic sur le bureau), envoie N `k` par SSH et note les inclinaisons de molette vues.
